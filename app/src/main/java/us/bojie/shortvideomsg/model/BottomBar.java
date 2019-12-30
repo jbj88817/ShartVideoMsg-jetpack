@@ -14,6 +14,7 @@ public class BottomBar {
     private String activeColor;
     private String inActiveColor;
     private List<Tabs> tabs;
+    public int selectTab;
 
     public String getActiveColor() {
         return activeColor;

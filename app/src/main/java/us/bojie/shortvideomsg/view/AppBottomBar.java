@@ -75,8 +75,14 @@ public class AppBottomBar extends BottomNavigationView {
                 itemView.setShifting(false);
             }
         }
-    }
 
+        if (bottomBar.selectTab != 0) {
+            BottomBar.Tabs selectTab = bottomBar.getTabs().get(bottomBar.selectTab);
+            int itemId = getId(selectTab.getPageUrl());
+            setSelectedItemId(itemId);
+        }
+    }
+    
     private int dp2px(int size) {
         float v = getContext().getResources().getDisplayMetrics().density * size + 0.5f;
         return (int) v;

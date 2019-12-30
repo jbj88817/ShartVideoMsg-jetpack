@@ -1,6 +1,7 @@
 {
   "activeColor": "#333333",
   "inActiveColor": "#666666",
+  "selectTab": 0,
   "tabs": [
     {
       "size": 24,
