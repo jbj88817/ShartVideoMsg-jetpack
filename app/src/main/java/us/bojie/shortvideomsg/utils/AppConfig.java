@@ -11,11 +11,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
+import us.bojie.shortvideomsg.model.BottomBar;
 import us.bojie.shortvideomsg.model.Destination;
 
 public class AppConfig {
 
     private static HashMap<String, Destination> sDestConfig;
+
+    private static BottomBar sBottomBar;
 
     public static HashMap<String, Destination> getDestConfig() {
         if (sDestConfig == null) {
@@ -25,6 +28,14 @@ public class AppConfig {
         }
 
         return sDestConfig;
+    }
+
+    public static BottomBar getsBottomBar() {
+        if (sBottomBar == null) {
+            String content = parseFile("main_tabs_config.json");
+            sBottomBar = JSON.parseObject(content, BottomBar.class);
+        }
+        return sBottomBar;
     }
 
     private static String parseFile(String fileName) {

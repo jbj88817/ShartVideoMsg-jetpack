@@ -1,4 +1,4 @@
-package us.bojie.shortvideomsg.ui.dashboard;
+package us.bojie.shortvideomsg.ui.me;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,18 +14,18 @@ import androidx.lifecycle.ViewModelProviders;
 import us.bojie.libnavannotation.FragmentDestination;
 import us.bojie.shortvideomsg.R;
 
-@FragmentDestination(pageUrl = "main/tabs/sofa")
-public class DashboardFragment extends Fragment {
+@FragmentDestination(pageUrl = "main/tabs/my")
+public class MeFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private MeViewModel meViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(this, new Observer<String>() {
+        meViewModel =
+                ViewModelProviders.of(this).get(MeViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_me, container, false);
+        final TextView textView = root.findViewById(R.id.text_me);
+        meViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

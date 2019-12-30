@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import us.bojie.libnavannotation.FragmentDestination;
 import us.bojie.shortvideomsg.R;
 
-@FragmentDestination(pageUrl = "main/tabs/notification")
+@FragmentDestination(pageUrl = "main/tabs/find")
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
