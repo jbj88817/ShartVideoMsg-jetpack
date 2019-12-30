@@ -37,4 +37,6 @@ dependencies {
 
     implementation project(":libnavannotation")
     annotationProcessor project(":libnavcompiler")
+
+    implementation 'com.alibaba:fastjson:1.2.59'
 }
