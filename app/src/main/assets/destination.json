@@ -1,0 +1,26 @@
+{
+  "main/tabs/dash": {
+    "isFragment": true,
+    "asStarter": false,
+    "needLogin": false,
+    "pageUrl": "main/tabs/dash",
+    "id": 1862147327,
+    "clazzName": "us.bojie.shortvideomsg.ui.dashboard.DashboardFragment"
+  },
+  "main/tabs/home": {
+    "isFragment": true,
+    "asStarter": true,
+    "needLogin": false,
+    "pageUrl": "main/tabs/home",
+    "id": 1266829525,
+    "clazzName": "us.bojie.shortvideomsg.ui.home.HomeFragment"
+  },
+  "main/tabs/notification": {
+    "isFragment": true,
+    "asStarter": false,
+    "needLogin": false,
+    "pageUrl": "main/tabs/notification",
+    "id": 1079284393,
+    "clazzName": "us.bojie.shortvideomsg.ui.notifications.NotificationsFragment"
+  }
+}
