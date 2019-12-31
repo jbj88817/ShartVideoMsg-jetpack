@@ -1,6 +1,7 @@
 package us.bojie.shortvideomsg.ui.notifications;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,13 @@ import us.bojie.shortvideomsg.R;
 
 @FragmentDestination(pageUrl = "main/tabs/find")
 public class NotificationsFragment extends Fragment {
+    private static final String TAG = "NotificationsFragment";
 
     private NotificationsViewModel notificationsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
         notificationsViewModel =
                 ViewModelProviders.of(this).get(NotificationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);

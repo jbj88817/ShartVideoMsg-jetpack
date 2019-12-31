@@ -1,6 +1,7 @@
 package us.bojie.shortvideomsg.ui.dashboard;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,13 @@ import us.bojie.shortvideomsg.R;
 
 @FragmentDestination(pageUrl = "main/tabs/sofa")
 public class DashboardFragment extends Fragment {
+    private static final String TAG = "DashboardFragment";
 
     private DashboardViewModel dashboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);

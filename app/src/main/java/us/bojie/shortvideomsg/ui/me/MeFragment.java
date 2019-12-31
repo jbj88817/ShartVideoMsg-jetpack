@@ -1,6 +1,7 @@
 package us.bojie.shortvideomsg.ui.me;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,13 @@ import us.bojie.shortvideomsg.R;
 
 @FragmentDestination(pageUrl = "main/tabs/my")
 public class MeFragment extends Fragment {
+    private static final String TAG = "MeFragment";
 
     private MeViewModel meViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
         meViewModel =
                 ViewModelProviders.of(this).get(MeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_me, container, false);
