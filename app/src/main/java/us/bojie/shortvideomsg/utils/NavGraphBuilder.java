@@ -11,6 +11,8 @@ import androidx.navigation.NavGraph;
 import androidx.navigation.NavGraphNavigator;
 import androidx.navigation.NavigatorProvider;
 import androidx.navigation.fragment.FragmentNavigator;
+
+import us.bojie.libcommon.AppGlobals;
 import us.bojie.shortvideomsg.navigator.FixFragmentNavigator;
 import us.bojie.shortvideomsg.model.Destination;
 

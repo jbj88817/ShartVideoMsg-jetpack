@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
+import us.bojie.libcommon.AppGlobals;
 import us.bojie.shortvideomsg.model.BottomBar;
 import us.bojie.shortvideomsg.model.Destination;
 
