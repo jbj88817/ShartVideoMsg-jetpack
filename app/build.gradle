@@ -40,4 +40,5 @@ dependencies {
 
     implementation 'com.alibaba:fastjson:1.2.59'
     implementation project(":libnetwork")
+    implementation project(":libcommon")
 }

@@ -1,2 +1,2 @@
-include ':app', ':libnavannotation', ':libnavcompiler', ':libnetwork'
+include ':app', ':libnavannotation', ':libnavcompiler', ':libnetwork', ':libcommon'
 rootProject.name='ShortVideoMsg'

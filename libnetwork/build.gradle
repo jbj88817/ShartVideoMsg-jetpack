@@ -12,6 +12,12 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocal": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -32,5 +38,5 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.59'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
-
+    compileOnly project(":libcommon")
 }

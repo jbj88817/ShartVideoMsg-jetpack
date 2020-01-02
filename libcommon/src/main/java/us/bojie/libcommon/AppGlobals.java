@@ -1,4 +1,4 @@
-package us.bojie.shortvideomsg.utils;
+package us.bojie.libcommon;
 
 import android.app.Application;
 
