@@ -63,23 +63,37 @@ public class AppBottomBar extends BottomNavigationView {
             item.setIcon(sIcons[tab.getIndex()]);
         }
 
+        int index = 0;
         for (int i = 0; i < tabs.size(); i++) {
             BottomBar.Tabs tab = tabs.get(i);
+            if (!tab.isEnable()) {
+                continue;
+            }
+
+            int itemId = getId(tab.getPageUrl());
+            if (itemId < 0) {
+                continue;
+            }
+
             int iconSize = dp2px(tab.getSize());
             BottomNavigationMenuView menuView = (BottomNavigationMenuView) getChildAt(0);
-            BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(tab.getIndex());
+            BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(index);
             itemView.setIconSize(iconSize);
 
             if (TextUtils.isEmpty(tab.getTitle())) {
                 itemView.setIconTintList(ColorStateList.valueOf(Color.parseColor(tab.getTintColor())));
                 itemView.setShifting(false);
             }
+            index++;
         }
 
         if (bottomBar.selectTab != 0) {
             BottomBar.Tabs selectTab = bottomBar.getTabs().get(bottomBar.selectTab);
-            int itemId = getId(selectTab.getPageUrl());
-            setSelectedItemId(itemId);
+            if (selectTab.isEnable()) {
+                int itemId = getId(selectTab.getPageUrl());
+                // need to delay here, wait for NavGraphBuilder init
+                post(() -> setSelectedItemId(itemId));
+            }
         }
     }
     
