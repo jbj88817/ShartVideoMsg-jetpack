@@ -12,8 +12,7 @@
         android:id="@+id/empty_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_empty_no_data"
-        android:visibility="gone" />
+        android:src="@drawable/icon_empty_no_data" />
 
     <TextView
         android:id="@+id/empty_text"
