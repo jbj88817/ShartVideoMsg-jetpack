@@ -42,7 +42,7 @@
             app:comment="@{feed.topComment}" />
 
         <include
-            layout="@layout/layout_feed_interation"
+            layout="@layout/layout_feed_interaction"
             app:feed="{@feed}" />
     </LinearLayout>
 </layout>
