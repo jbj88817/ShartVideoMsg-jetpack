@@ -8,9 +8,15 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.databinding.BindingAdapter;
+
+import us.bojie.libcommon.PixUtils;
 
 public class SVMImageView extends AppCompatImageView {
     public SVMImageView(Context context) {
@@ -36,5 +42,42 @@ public class SVMImageView extends AppCompatImageView {
             builder.override(layoutParams.width, layoutParams.height);
         }
         builder.into(view);
+    }
+
+    public void bindData(int widthPx, int heightPx, int marginLeft, String imageUrl) {
+        bindData(widthPx, heightPx, marginLeft, PixUtils.getScreenWidth(), PixUtils.getScreenHeight(), imageUrl);
+    }
+
+    public void bindData(int widthPx, int heightPx, int marginLeft, int maxWidth, int maxHeight, String imageUrl) {
+        if (widthPx <= 0 || heightPx <= 0) {
+            Glide.with(this).load(imageUrl).into(new SimpleTarget<Drawable>() {
+                @Override
+                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                    int height = resource.getIntrinsicHeight();
+                    int width = resource.getIntrinsicWidth();
+                    setSize(height, width, marginLeft, maxWidth, maxHeight);
+                    setImageDrawable(resource);
+                }
+            });
+            return;
+        }
+
+        setSize(widthPx, heightPx, marginLeft, maxWidth, maxHeight);
+        setImageUrl(this, imageUrl, false);
+    }
+
+    private void setSize(int height, int width, int marginLeft, int maxWidth, int maxHeight) {
+        int finalWidth, finalHeight;
+        if (width > height) {
+            finalWidth = maxWidth;
+            finalHeight = (int) (height / (width * 1.0f / finalWidth));
+        } else {
+            finalHeight = maxHeight;
+            finalWidth = (int) (width / (height * 1.0f / finalHeight));
+        }
+
+        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(finalWidth, finalHeight);
+        params.leftMargin = height > width ? PixUtils.dp2px(marginLeft) : 0;
+        setLayoutParams(params);
     }
 }
