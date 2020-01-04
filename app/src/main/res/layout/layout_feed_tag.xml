@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:backgroundTint="@color/color_gray"
-    android:orientation="vertical"
-    android:text="yeahyeah"
-    android:textColor="@color/color_2f2"
-    android:textSize="@dimen/sp_12"
-    app:icon="@drawable/icon_tag"
-    app:iconGravity="textStart"
-    app:iconPadding="@dimen/dp_4"
-    app:iconSize="@dimen/dp_12"
-    app:iconTint="@color/color_theme">
+    xmlns:tools="http://schemas.android.com/tools">
 
-</com.google.android.material.button.MaterialButton>
+    <data>
+
+        <variable
+            name="tagText"
+            type="java.lang.String" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:backgroundTint="@color/color_gray"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:orientation="vertical"
+        android:text="@{tagText}"
+        android:textColor="@color/color_2f2"
+        android:textSize="@dimen/sp_12"
+        android:visibility="@{TextUtils.isEmpty(tagText) ? View.GONE : View.VISIBLE}"
+        app:cornerRadius="@dimen/dp_25"
+        app:icon="@drawable/icon_tag"
+        app:iconGravity="textStart"
+        app:iconPadding="@dimen/dp_4"
+        app:iconSize="@dimen/dp_12"
+        app:iconTint="@color/color_theme"
+        tools:text="I'm a tag">
+
+    </com.google.android.material.button.MaterialButton>
+</layout>

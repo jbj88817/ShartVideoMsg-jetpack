@@ -111,7 +111,6 @@ public abstract class Request<T, R> implements Cloneable {
                     } else {
                         callBack.onSuccess(apiResponse);
                     }
-
                 }
             });
         }
@@ -209,10 +208,8 @@ public abstract class Request<T, R> implements Cloneable {
             result = parseResponse(response, null);
         } catch (IOException e) {
             e.printStackTrace();
-            if (result == null) {
-                result = new ApiResponse<>();
-                result.message = e.getMessage();
-            }
+            result = new ApiResponse<>();
+            result.message = e.getMessage();
         }
         return result;
     }
