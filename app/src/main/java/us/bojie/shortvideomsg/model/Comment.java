@@ -1,5 +1,7 @@
 package us.bojie.shortvideomsg.model;
 
+import java.util.Objects;
+
 public class Comment {
 
     /**
@@ -166,4 +168,31 @@ public class Comment {
         this.ugc = ugc;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return id == comment.id &&
+                itemId == comment.itemId &&
+                commentId == comment.commentId &&
+                userId == comment.userId &&
+                commentType == comment.commentType &&
+                createTime == comment.createTime &&
+                commentCount == comment.commentCount &&
+                likeCount == comment.likeCount &&
+                width == comment.width &&
+                height == comment.height &&
+                hasLiked == comment.hasLiked &&
+                Objects.equals(commentText, comment.commentText) &&
+                Objects.equals(imageUrl, comment.imageUrl) &&
+                Objects.equals(videoUrl, comment.videoUrl) &&
+                Objects.equals(author, comment.author) &&
+                Objects.equals(ugc, comment.ugc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, itemId, commentId, userId, commentType, createTime, commentCount, likeCount, commentText, imageUrl, videoUrl, width, height, hasLiked, author, ugc);
+    }
 }

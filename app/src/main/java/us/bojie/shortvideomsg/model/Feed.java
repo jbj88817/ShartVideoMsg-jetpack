@@ -1,7 +1,11 @@
 package us.bojie.shortvideomsg.model;
 
+import java.util.Objects;
+
 public class Feed {
 
+    public static final int TYPE_IMAGE = 1;
+    public static final int TYPE_VIDEO = 2;
     /**
      * id : 378
      * itemId : 6760496353719097000
@@ -161,5 +165,33 @@ public class Feed {
 
     public void setUgc(Ugc ugc) {
         this.ugc = ugc;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Feed feed = (Feed) o;
+        return id == feed.id &&
+                itemId == feed.itemId &&
+                itemType == feed.itemType &&
+                createTime == feed.createTime &&
+                Double.compare(feed.duration, duration) == 0 &&
+                authorId == feed.authorId &&
+                width == feed.width &&
+                height == feed.height &&
+                Objects.equals(feeds_text, feed.feeds_text) &&
+                Objects.equals(activityIcon, feed.activityIcon) &&
+                Objects.equals(activityText, feed.activityText) &&
+                Objects.equals(url, feed.url) &&
+                Objects.equals(cover, feed.cover) &&
+                Objects.equals(author, feed.author) &&
+                Objects.equals(topComment, feed.topComment) &&
+                Objects.equals(ugc, feed.ugc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, itemId, itemType, createTime, duration, feeds_text, authorId, activityIcon, activityText, width, height, url, cover, author, topComment, ugc);
     }
 }
