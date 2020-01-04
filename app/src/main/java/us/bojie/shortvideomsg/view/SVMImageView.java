@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.databinding.BindingAdapter;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import us.bojie.libcommon.PixUtils;
 
 public class SVMImageView extends AppCompatImageView {
@@ -79,5 +80,17 @@ public class SVMImageView extends AppCompatImageView {
         ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(finalWidth, finalHeight);
         params.leftMargin = height > width ? PixUtils.dp2px(marginLeft) : 0;
         setLayoutParams(params);
+    }
+
+    public void setBlurImageUrl(String coverUrl, int radius) {
+        Glide.with(this).load(coverUrl).override(radius)
+                .transform(new BlurTransformation())
+                .dontAnimate()
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        setBackground(resource);
+                    }
+                });
     }
 }
