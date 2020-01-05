@@ -20,7 +20,7 @@
 
         <include
             layout="@layout/layout_feed_author"
-            app:user="{@feed.author}" />
+            app:user="@{feed.author}" />
 
         <include
             layout="@layout/layout_feed_text"
@@ -43,6 +43,6 @@
 
         <include
             layout="@layout/layout_feed_interaction"
-            app:feed="{@feed}" />
+            app:feed="@{feed}" />
     </LinearLayout>
 </layout>

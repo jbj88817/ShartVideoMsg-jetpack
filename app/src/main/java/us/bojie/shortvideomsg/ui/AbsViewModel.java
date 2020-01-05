@@ -64,7 +64,7 @@ public abstract class AbsViewModel<T> extends ViewModel {
         return dataSource;
     }
 
-    public MutableLiveData<Boolean> getBoundaryPageData() {
+    protected MutableLiveData<Boolean> getBoundaryPageData() {
         return boundaryPageData;
     }
 

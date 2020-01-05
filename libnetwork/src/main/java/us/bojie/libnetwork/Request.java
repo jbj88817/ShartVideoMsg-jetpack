@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import androidx.arch.core.executor.ArchTaskExecutor;
 
 import okhttp3.Call;
@@ -22,7 +23,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import us.bojie.libnetwork.cache.CacheManager;
 
-public abstract class Request<T, R> implements Cloneable {
+public abstract class Request<T, R extends Request> implements Cloneable {
     private static final String TAG = "Request";
     protected String mUrl;
     private HashMap<String, String> headers = new HashMap<>();
@@ -55,7 +56,10 @@ public abstract class Request<T, R> implements Cloneable {
         return (R) this;
     }
 
-    public R addParams(String key, Object value) {
+    public R addParam(String key, Object value) {
+        if (value == null) {
+            return (R) this;
+        }
         try {
             Field field = value.getClass().getField("TYPE");
             Class clazz = (Class) field.get(null);
@@ -199,10 +203,14 @@ public abstract class Request<T, R> implements Cloneable {
     }
 
     public ApiResponse<T> execute() {
+        if (mType == null) {
+            throw new RuntimeException("Synced method needs response type.");
+        }
+
         if (mCacheStrategy == CACHE_ONLY) {
             return readCache();
         }
-        ApiResponse<T> result = null;
+        ApiResponse<T> result;
         try {
             Response response = getCall().execute();
             result = parseResponse(response, null);
@@ -212,5 +220,11 @@ public abstract class Request<T, R> implements Cloneable {
             result.message = e.getMessage();
         }
         return result;
+    }
+
+    @NonNull
+    @Override
+    public Request clone() throws CloneNotSupportedException {
+        return (Request<T, R>) super.clone();
     }
 }

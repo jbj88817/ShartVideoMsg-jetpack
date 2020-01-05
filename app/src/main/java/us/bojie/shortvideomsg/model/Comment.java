@@ -28,7 +28,7 @@ public class Comment {
     private long commentId;
     private long userId;
     private int commentType;
-    private int createTime;
+    private long createTime;
     private int commentCount;
     private int likeCount;
     private String commentText;
@@ -80,11 +80,11 @@ public class Comment {
         this.commentType = commentType;
     }
 
-    public int getCreateTime() {
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(int createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 
