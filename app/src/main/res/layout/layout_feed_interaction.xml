@@ -33,8 +33,11 @@
             app:icon="@{feed.ugc.hasLiked ? @drawable/icon_cell_liked : @drawable/icon_cell_like}"
             app:iconGravity="textStart"
             app:iconPadding="@dimen/dp_4"
-            tools:icon="@drawable/icon_cell_liked"
-            tools:text="1000" />
+            app:iconTint="@{feed.ugc.hasLiked?@color/color_theme:@color/color_3d3}"
+            tools:icon="@drawable/icon_cell_like"
+            tools:iconTint="@color/color_3d3"
+            tools:text="1000"
+            tools:textColor="@color/color_3d3" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/diss"
@@ -48,8 +51,11 @@
             app:icon="@{feed.ugc.hasdiss ? @drawable/icon_cell_dissed : @drawable/icon_cell_diss}"
             app:iconGravity="textStart"
             app:iconPadding="@dimen/dp_4"
-            tools:icon="@drawable/icon_cell_dissed"
-            tools:text="1000" />
+            app:iconTint="@{feed.ugc.hasdiss?@color/color_theme:@color/color_3d3}"
+            tools:icon="@drawable/icon_cell_diss"
+            tools:iconTint="@color/color_3d3"
+            tools:text="1000"
+            tools:textColor="@color/color_3d3" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/comment"
@@ -58,12 +64,16 @@
             android:layout_weight="1"
             android:backgroundTint="@color/color_white"
             android:text="@{feed.ugc.commentCount > 0 ? StringConvert.convertFeedUgc(feed.ugc.commentCount) : null}"
+            android:textColor="@color/color_3d3"
             android:textSize="@dimen/sp_14"
             app:icon="@drawable/icon_cell_comment"
             app:iconGravity="textStart"
             app:iconPadding="@dimen/dp_4"
+            app:iconTint="@color/color_3d3"
             tools:icon="@drawable/icon_cell_comment"
-            tools:text="1000" />
+            tools:iconTint="@color/color_3d3"
+            tools:text="1000"
+            tools:textColor="@color/color_3d3" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/share"
@@ -72,12 +82,16 @@
             android:layout_weight="1"
             android:backgroundTint="@color/color_white"
             android:text="@{feed.ugc.shareCount > 0 ? StringConvert.convertFeedUgc(feed.ugc.shareCount) : null}"
+            android:textColor="@color/color_3d3"
             android:textSize="@dimen/sp_14"
             app:icon="@drawable/icon_cell_share"
             app:iconGravity="textStart"
             app:iconPadding="@dimen/dp_4"
+            app:iconTint="@color/color_3d3"
             tools:icon="@drawable/icon_cell_share"
-            tools:text="1000" />
+            tools:iconTint="@color/color_3d3"
+            tools:text="1000"
+            tools:textColor="@color/color_3d3" />
 
     </LinearLayout>
 </layout>

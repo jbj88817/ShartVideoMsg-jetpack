@@ -1,8 +1,9 @@
 package us.bojie.shortvideomsg.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Comment {
+public class Comment implements Serializable {
 
     /**
      * id : 784

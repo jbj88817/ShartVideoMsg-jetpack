@@ -18,10 +18,10 @@ public class UrlCreator {
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             try {
                 String value = URLEncoder.encode(String.valueOf(entry.getValue()), "UTF-8");
+                sb.append(entry.getKey()).append("=").append(value).append("&");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            sb.append(entry.getKey()).append("=").append("&");
         }
 
         sb.deleteCharAt(sb.length() - 1);

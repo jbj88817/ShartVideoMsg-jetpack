@@ -1,8 +1,9 @@
 package us.bojie.shortvideomsg.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Feed {
+public class Feed implements Serializable {
 
     public static final int TYPE_IMAGE = 1;
     public static final int TYPE_VIDEO = 2;

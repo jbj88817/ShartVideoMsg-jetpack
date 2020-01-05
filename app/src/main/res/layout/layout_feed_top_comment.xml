@@ -25,7 +25,8 @@
         android:orientation="vertical"
         android:paddingStart="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_10"
-        android:paddingBottom="@dimen/dp_10">
+        android:paddingBottom="@dimen/dp_10"
+        android:visibility="@{comment==null?View.GONE:View.VISIBLE}">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -103,13 +104,15 @@
             <FrameLayout
                 android:layout_width="@dimen/dp_80"
                 android:layout_height="@dimen/dp_80"
-                android:layout_marginTop="@dimen/dp_10">
+                android:layout_marginTop="@dimen/dp_10"
+                android:visibility="@{TextUtils.isEmpty(comment.imageUrl)?View.GONE:View.VISIBLE}">
 
                 <us.bojie.shortvideomsg.view.SVMImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:background="@color/color_theme_10"
+                    android:visibility="@{TextUtils.isEmpty(comment.imageUrl)?View.GONE:View.VISIBLE}"
                     app:image_url="@{comment.imageUrl}"
                     app:isCircle="@{false}"
                     tools:src="@mipmap/ic_launcher" />

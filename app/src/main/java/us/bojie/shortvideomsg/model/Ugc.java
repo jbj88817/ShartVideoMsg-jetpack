@@ -1,8 +1,9 @@
 package us.bojie.shortvideomsg.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Ugc {
+public class Ugc implements Serializable {
 
     /**
      * likeCount : 153
