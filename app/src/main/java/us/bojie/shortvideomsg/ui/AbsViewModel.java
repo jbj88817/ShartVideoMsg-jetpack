@@ -10,6 +10,7 @@ import androidx.paging.PagedList;
 
 public abstract class AbsViewModel<T> extends ViewModel {
     private final LiveData<PagedList<T>> pageData;
+    protected final PagedList.Config config;
     private DataSource dataSource;
 
     private MutableLiveData<Boolean> boundaryPageData = new MutableLiveData<>();
@@ -41,7 +42,7 @@ public abstract class AbsViewModel<T> extends ViewModel {
     };
 
     public AbsViewModel() {
-        PagedList.Config config = new PagedList.Config.Builder()
+         config = new PagedList.Config.Builder()
                 .setPageSize(10)
                 .setInitialLoadSizeHint(12)
 //                .setMaxSize(100)

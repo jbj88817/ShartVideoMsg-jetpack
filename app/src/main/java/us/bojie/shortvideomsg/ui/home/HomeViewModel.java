@@ -3,14 +3,18 @@ package us.bojie.shortvideomsg.ui.home;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.arch.core.executor.ArchTaskExecutor;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.ItemKeyedDataSource;
+import androidx.paging.PagedList;
 
 import com.alibaba.fastjson.TypeReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import us.bojie.libnetwork.ApiResponse;
 import us.bojie.libnetwork.ApiService;
@@ -18,11 +22,14 @@ import us.bojie.libnetwork.JsonCallBack;
 import us.bojie.libnetwork.Request;
 import us.bojie.shortvideomsg.model.Feed;
 import us.bojie.shortvideomsg.ui.AbsViewModel;
+import us.bojie.shortvideomsg.ui.MutableDataSource;
 
 public class HomeViewModel extends AbsViewModel<Feed> {
 
     private static final String TAG = "HomeViewModel";
     private volatile boolean withCache = true;
+    private MutableLiveData<PagedList<Feed>> cacheLiveData = new MutableLiveData<>();
+    private AtomicBoolean loadAfter = new AtomicBoolean(false);
 
     @Override
     protected DataSource createDataSource() {
@@ -54,6 +61,10 @@ public class HomeViewModel extends AbsViewModel<Feed> {
     };
 
     private void loadData(int key, ItemKeyedDataSource.LoadCallback<Feed> callback) {
+        if (key > 0) {
+            loadAfter.set(true);
+        }
+
 //        /feeds/queryHotFeedsList
         Request request = ApiService.get("/feeds/queryHotFeedsList")
                 .addParam("feedType", null)
@@ -69,6 +80,11 @@ public class HomeViewModel extends AbsViewModel<Feed> {
                 @Override
                 public void onCacheSuccess(ApiResponse<List<Feed>> response) {
                     Log.d(TAG, "onCacheSuccess: " + response.body.size());
+                    List<Feed> body = response.body;
+                    MutableDataSource<Integer, Feed> dataSource = new MutableDataSource<>();
+                    dataSource.data.addAll(body);
+                    PagedList pagedList = dataSource.buildNewPagedList(config);
+                    cacheLiveData.postValue(pagedList);
                 }
             });
         }
@@ -82,9 +98,24 @@ public class HomeViewModel extends AbsViewModel<Feed> {
 
             if (key > 0) {
                 getBoundaryPageData().postValue(data.size() > 0);
+                loadAfter.set(false);
             }
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
+
+        Log.d(TAG, "loadData: key" + key);
+    }
+
+    public MutableLiveData<PagedList<Feed>> getCacheLiveData() {
+        return cacheLiveData;
+    }
+
+    public void loadAfter(int id, ItemKeyedDataSource.LoadCallback<Feed> callback) {
+        if (loadAfter.get()) {
+            callback.onResult(Collections.emptyList());
+            return;
+        }
+        ArchTaskExecutor.getIOThreadExecutor().execute(() -> loadData(id, callback));
     }
 }
