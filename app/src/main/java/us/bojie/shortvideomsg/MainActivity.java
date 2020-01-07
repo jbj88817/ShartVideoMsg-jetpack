@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //        GetRequest<JSONObject> request = new GetRequest<>("www.imooc.com");
 //        request.execute();
 //
-//        request.execute(new JsonCallBack<JSONObject>() {
+//        request.execute(new JsonCallback<JSONObject>() {
 //            @Override
 //            public void onSuccess(ApiResponse<JSONObject> response) {
 //                super.onSuccess(response);

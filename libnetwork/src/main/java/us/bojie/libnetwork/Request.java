@@ -39,7 +39,7 @@ public abstract class Request<T, R extends Request> implements Cloneable {
     private String cacheKey;
     private Type mType;
     private Class mClazz;
-    private int mCacheStrategy;
+    private int mCacheStrategy = NET_ONLY;
 
     @IntDef({CACHE_ONLY, CACHE_FIRST, NET_ONLY, NET_CACHE})
     public @interface CacheStrategy {
@@ -85,13 +85,13 @@ public abstract class Request<T, R extends Request> implements Cloneable {
     }
 
     @SuppressLint("RestrictedApi")
-    public void execute(final JsonCallBack<T> callBack) {
+    public void execute(final JsonCallback<T> callBack) {
         if (mCacheStrategy != NET_ONLY) {
             ArchTaskExecutor.getIOThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
                     ApiResponse<T> response = readCache();
-                    if (callBack != null) {
+                    if (callBack != null && response.body != null) {
                         callBack.onCacheSuccess(response);
                     }
                 }
@@ -131,7 +131,7 @@ public abstract class Request<T, R extends Request> implements Cloneable {
         return result;
     }
 
-    private ApiResponse<T> parseResponse(Response response, JsonCallBack<T> callBack) {
+    private ApiResponse<T> parseResponse(Response response, JsonCallback<T> callBack) {
         String message = null;
         int status = response.code();
         boolean success = response.isSuccessful();

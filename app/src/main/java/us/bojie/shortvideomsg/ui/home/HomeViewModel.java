@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import us.bojie.libnetwork.ApiResponse;
 import us.bojie.libnetwork.ApiService;
-import us.bojie.libnetwork.JsonCallBack;
+import us.bojie.libnetwork.JsonCallback;
 import us.bojie.libnetwork.Request;
 import us.bojie.shortvideomsg.model.Feed;
 import us.bojie.shortvideomsg.ui.AbsViewModel;
@@ -33,19 +33,19 @@ public class HomeViewModel extends AbsViewModel<Feed> {
 
     @Override
     protected DataSource createDataSource() {
-        return mDataSource;
+        return new FeedDataSource();
     }
 
-    ItemKeyedDataSource<Integer, Feed> mDataSource = new ItemKeyedDataSource<Integer, Feed>() {
+    class FeedDataSource extends ItemKeyedDataSource<Integer, Feed> {
         @Override
         public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Feed> callback) {
-            loadData(0, callback);
+            loadData(0, params.requestedLoadSize, callback);
             withCache = false;
         }
 
         @Override
         public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Feed> callback) {
-            loadData(params.key, callback);
+            loadData(params.key, params.requestedLoadSize, callback);
         }
 
         @Override
@@ -58,9 +58,9 @@ public class HomeViewModel extends AbsViewModel<Feed> {
         public Integer getKey(@NonNull Feed item) {
             return item.getId();
         }
-    };
+    }
 
-    private void loadData(int key, ItemKeyedDataSource.LoadCallback<Feed> callback) {
+    private void loadData(int key, int pageSize, ItemKeyedDataSource.LoadCallback<Feed> callback) {
         if (key > 0) {
             loadAfter.set(true);
         }
@@ -70,16 +70,16 @@ public class HomeViewModel extends AbsViewModel<Feed> {
                 .addParam("feedType", null)
                 .addParam("userId", 0)
                 .addParam("feedId", key)
-                .addParam("pageCount", 10)
+                .addParam("pageCount", pageSize)
                 .responseType(new TypeReference<ArrayList<Feed>>() {
                 }.getType());
 
         if (withCache) {
             request.cacheStrategy(Request.CACHE_ONLY);
-            request.execute(new JsonCallBack<List<Feed>>() {
+            request.execute(new JsonCallback<List<Feed>>() {
                 @Override
                 public void onCacheSuccess(ApiResponse<List<Feed>> response) {
-                    Log.d(TAG, "onCacheSuccess: " + response.body.size());
+                    Log.d(TAG, "onCacheSuccess: ");
                     List<Feed> body = response.body;
                     MutableDataSource<Integer, Feed> dataSource = new MutableDataSource<>();
                     dataSource.data.addAll(body);
@@ -116,6 +116,6 @@ public class HomeViewModel extends AbsViewModel<Feed> {
             callback.onResult(Collections.emptyList());
             return;
         }
-        ArchTaskExecutor.getIOThreadExecutor().execute(() -> loadData(id, callback));
+        ArchTaskExecutor.getIOThreadExecutor().execute(() -> loadData(id, config.pageSize, callback));
     }
 }

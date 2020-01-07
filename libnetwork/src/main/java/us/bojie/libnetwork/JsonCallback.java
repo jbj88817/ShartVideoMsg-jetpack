@@ -1,6 +1,6 @@
 package us.bojie.libnetwork;
 
-public abstract class JsonCallBack<T> {
+public abstract class JsonCallback<T> {
     public void onSuccess(ApiResponse<T> response) {
 
     }

@@ -1,6 +1,5 @@
 package us.bojie.shortvideomsg.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,11 +59,9 @@ public abstract class AbsListFragment<T, M extends AbsViewModel<T>> extends Frag
         decoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.list_divider));
         mRecyclerView.addItemDecoration(decoration);
 
-        afterCreateView();
+        genericViewModel();
         return binding.getRoot();
     }
-
-    protected abstract void afterCreateView();
 
     public void submitList(PagedList<T> pagedList) {
         if (pagedList.size() > 0) {
@@ -73,9 +70,7 @@ public abstract class AbsListFragment<T, M extends AbsViewModel<T>> extends Frag
         finishRefresh(pagedList.size() > 0);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void genericViewModel() {
         ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
         Type[] arguments = type.getActualTypeArguments();
         if (arguments.length > 1) {

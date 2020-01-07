@@ -1,10 +1,12 @@
 package us.bojie.shortvideomsg.ui.home;
 
 
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
+import androidx.annotation.Nullable;
 import androidx.paging.ItemKeyedDataSource;
 import androidx.paging.PagedList;
 import androidx.paging.PagedListAdapter;
@@ -23,7 +25,8 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
     private static final String TAG = "HomeFragment";
 
     @Override
-    protected void afterCreateView() {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mViewModel.getCacheLiveData().observe(this, feeds -> mAdapter.submitList(feeds));
     }
 
@@ -42,6 +45,7 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
                 PagedList.Config config = mAdapter.getCurrentList().getConfig();
                 if (data != null && data.size() > 0) {
                     MutableDataSource dataSource = new MutableDataSource();
+                    dataSource.data.addAll(mAdapter.getCurrentList());
                     dataSource.data.addAll(data);
                     PagedList pagedList = dataSource.buildNewPagedList(config);
                     submitList(pagedList);
