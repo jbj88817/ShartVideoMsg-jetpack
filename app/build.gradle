@@ -44,4 +44,7 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.59'
     implementation project(":libnetwork")
     implementation project(":libcommon")
+
+    // QQ login
+    implementation files('libs/open_sdk_r6140_lite.jar')
 }
