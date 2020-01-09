@@ -9,9 +9,9 @@
             name="feed"
             type="Feed" />
 
-        <import type="us.bojie.shortvideomsg.model.Feed" />
+        <import type="com.mooc.ppjoke.model.Feed" />
 
-        <import type="us.bojie.shortvideomsg.utils.StringConvert" />
+        <import type="com.mooc.ppjoke.utils.StringConvert" />
     </data>
 
     <LinearLayout

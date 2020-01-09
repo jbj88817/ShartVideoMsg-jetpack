@@ -7,13 +7,13 @@
 
         <variable
             name="comment"
-            type="us.bojie.shortvideomsg.model.Comment" />
+            type="com.mooc.ppjoke.model.Comment" />
 
         <import type="android.text.TextUtils" />
 
         <import type="android.view.View" />
 
-        <import type="us.bojie.shortvideomsg.utils.StringConvert" />
+        <import type="com.mooc.ppjoke.utils.StringConvert" />
     </data>
 
     <FrameLayout
@@ -46,7 +46,7 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:orientation="horizontal">
 
-                <us.bojie.shortvideomsg.view.SVMImageView
+                <com.mooc.ppjoke.view.SVMImageView
                     android:id="@+id/avatar"
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
@@ -107,7 +107,7 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:visibility="@{TextUtils.isEmpty(comment.imageUrl)?View.GONE:View.VISIBLE}">
 
-                <us.bojie.shortvideomsg.view.SVMImageView
+                <com.mooc.ppjoke.view.SVMImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"

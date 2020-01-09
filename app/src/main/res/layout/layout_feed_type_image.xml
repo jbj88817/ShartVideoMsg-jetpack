@@ -8,7 +8,7 @@
             name="feed"
             type="Feed" />
 
-        <import type="us.bojie.shortvideomsg.model.Feed" />
+        <import type="com.mooc.ppjoke.model.Feed" />
 
     </data>
 
@@ -27,7 +27,7 @@
             app:feedText="@{feed.feeds_text}" />
 
         <!-- photos -->
-        <us.bojie.shortvideomsg.view.SVMImageView
+        <com.mooc.ppjoke.view.SVMImageView
             android:id="@+id/feed_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

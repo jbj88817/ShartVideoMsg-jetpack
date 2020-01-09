@@ -1,4 +1,4 @@
-package us.bojie.shortvideomsg;
+package com.mooc.ppjoke;
 
 import org.junit.Test;
 

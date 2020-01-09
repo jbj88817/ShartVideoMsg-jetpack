@@ -1,4 +1,4 @@
-package us.bojie.shortvideomsg;
+package com.mooc.ppjoke;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("us.bojie.shortvideomsg", appContext.getPackageName());
+        assertEquals("com.mooc.ppjoke", appContext.getPackageName());
     }
 }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <us.bojie.shortvideomsg.view.SVMImageView
+    <com.mooc.ppjoke.view.SVMImageView
         android:id="@+id/blur_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,7 +12,7 @@
 
     <!--    video_view would add here when running-->
 
-    <us.bojie.shortvideomsg.view.SVMImageView
+    <com.mooc.ppjoke.view.SVMImageView
         android:id="@+id/cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

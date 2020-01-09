@@ -9,7 +9,7 @@
             name="user"
             type="User" />
 
-        <import type="us.bojie.shortvideomsg.model.User" />
+        <import type="com.mooc.ppjoke.model.User" />
 
     </data>
 
@@ -21,7 +21,7 @@
         android:paddingStart="@dimen/dp_16"
         android:paddingEnd="@dimen/dp_16">
 
-        <us.bojie.shortvideomsg.view.SVMImageView
+        <com.mooc.ppjoke.view.SVMImageView
             android:id="@+id/avatar"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
