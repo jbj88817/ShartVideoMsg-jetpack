@@ -122,12 +122,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .addParam("name", nickname)
                 .addParam("avatar", avatar)
                 .addParam("qqOpenId", openid)
-                .addParam("expire_time", expiresTime)
+                .addParam("expires_time", expiresTime)
                 .execute(new JsonCallback<User>() {
                     @Override
                     public void onSuccess(ApiResponse<User> response) {
                         if (response.body != null) {
-                            com.mooc.ppjoke.ui.login.UserManager.get().save(response.body);
+                            UserManager.get().save(response.body);
+                            finish();
                         } else {
                             runOnUiThread(() -> Toast.makeText(getApplicationContext(), "login failed", Toast.LENGTH_SHORT).show());
                         }

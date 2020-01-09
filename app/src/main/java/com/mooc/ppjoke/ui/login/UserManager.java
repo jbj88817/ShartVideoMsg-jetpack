@@ -19,7 +19,7 @@ public class UserManager {
 
     private UserManager() {
         User cache = (User) CacheManager.getCache(KEY_CACHE_USER);
-        if (cache != null && cache.getExpiresTime() < System.currentTimeMillis()) {
+        if (cache != null && cache.getExpiresTime() > System.currentTimeMillis()) {
             mUser = cache;
         }
     }
@@ -44,7 +44,7 @@ public class UserManager {
     }
 
     public boolean isLogin() {
-        return mUser == null ? false : mUser.getExpiresTime() < System.currentTimeMillis();
+        return mUser == null ? false : mUser.getExpiresTime() > System.currentTimeMillis();
     }
 
     public User getUser() {

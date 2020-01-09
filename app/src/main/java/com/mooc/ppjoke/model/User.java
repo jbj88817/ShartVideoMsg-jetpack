@@ -34,8 +34,8 @@ public class User implements Serializable {
     private int topCommentCount;
     private int followCount;
     private int followerCount;
-    private long qqOpenId;
-    private int expires_time;
+    private String qqOpenId;
+    private long expires_time;
     private int score;
     private int historyCount;
     private int commentCount;
@@ -115,19 +115,19 @@ public class User implements Serializable {
         this.followerCount = followerCount;
     }
 
-    public long getQqOpenId() {
+    public String getQqOpenId() {
         return qqOpenId;
     }
 
-    public void setQqOpenId(long qqOpenId) {
+    public void setQqOpenId(String qqOpenId) {
         this.qqOpenId = qqOpenId;
     }
 
-    public int getExpiresTime() {
+    public long getExpiresTime() {
         return expires_time;
     }
 
-    public void setExpiresTime(int expiresTime) {
+    public void setExpiresTime(long expiresTime) {
         this.expires_time = expiresTime;
     }
 

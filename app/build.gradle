@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
+    signingConfigs {
+        joke {
+            storePassword '123456'
+            keyAlias = 'pipijoke'
+            keyPassword '123456'
+            storeFile file('../key')
+        }
+    }
     defaultConfig {
         applicationId "com.mooc.ppjoke"
         minSdkVersion 21
@@ -14,6 +22,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.joke
+        }
+        debug {
+            signingConfig signingConfigs.joke
         }
     }
 

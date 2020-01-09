@@ -61,10 +61,14 @@ public abstract class Request<T, R extends Request> implements Cloneable {
             return (R) this;
         }
         try {
-            Field field = value.getClass().getField("TYPE");
-            Class clazz = (Class) field.get(null);
-            if (clazz.isPrimitive()) {
+            if (value.getClass() == String.class) {
                 params.put(key, value);
+            } else {
+                Field field = value.getClass().getField("TYPE");
+                Class claz = (Class) field.get(null);
+                if (claz.isPrimitive()) {
+                    params.put(key, value);
+                }
             }
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
@@ -85,7 +89,7 @@ public abstract class Request<T, R extends Request> implements Cloneable {
     }
 
     @SuppressLint("RestrictedApi")
-    public void execute(final JsonCallback<T> callBack) {
+    public void execute(final JsonCallback callBack) {
         if (mCacheStrategy != NET_ONLY) {
             ArchTaskExecutor.getIOThreadExecutor().execute(new Runnable() {
                 @Override
