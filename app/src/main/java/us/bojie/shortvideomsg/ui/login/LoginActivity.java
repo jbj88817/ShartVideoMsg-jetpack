@@ -1,5 +1,6 @@
 package us.bojie.shortvideomsg.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
+import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -50,40 +52,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void login() {
-        if (tencent != null) {
+        if (tencent == null) {
             tencent = Tencent.createInstance("101794421", getApplicationContext());
         }
 
-        tencent.login(this, "all", new IUiListener() {
-            @Override
-            public void onComplete(Object o) {
-                JSONObject response = (JSONObject) o;
-                try {
-                    String openid = response.getString("openid");
-                    String access_token = response.getString("access_token");
-                    String expires_in = response.getString("expires_in");
-                    long expires_time = response.getLong("expires_time");
-
-                    tencent.setAccessToken(access_token, expires_in);
-                    tencent.setOpenId(openid);
-                    QQToken qqToken = tencent.getQQToken();
-                    getUserInfo(qqToken, expires_time, openid);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(UiError uiError) {
-                Toast.makeText(getApplicationContext(), "Login failed " + uiError.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(getApplicationContext(), "Login cancelled", Toast.LENGTH_SHORT).show();
-            }
-        });
+        tencent.login(this, "all", loginListener);
     }
+
+    IUiListener loginListener = new IUiListener() {
+        @Override
+        public void onComplete(Object o) {
+            JSONObject response = (JSONObject) o;
+            try {
+                String openid = response.getString("openid");
+                String access_token = response.getString("access_token");
+                String expires_in = response.getString("expires_in");
+                long expires_time = response.getLong("expires_time");
+
+                tencent.setAccessToken(access_token, expires_in);
+                tencent.setOpenId(openid);
+                QQToken qqToken = tencent.getQQToken();
+                getUserInfo(qqToken, expires_time, openid);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+            Toast.makeText(getApplicationContext(), "Login failed " + uiError.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel() {
+            Toast.makeText(getApplicationContext(), "Login cancelled", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     private void getUserInfo(QQToken qqToken, long expiresTime, String openid) {
         UserInfo userInfo = new UserInfo(getApplicationContext(), qqToken);
@@ -95,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String nickname = response.getString("nickname");
                     String figureurl2 = response.getString("figureurl_2");
 
-                    save(nickname, figureurl2, openid,expiresTime);
+                    save(nickname, figureurl2, openid, expiresTime);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -122,14 +126,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .execute(new JsonCallback<User>() {
                     @Override
                     public void onSuccess(ApiResponse<User> response) {
-
-
+                        if (response.body != null) {
+                            UserManager.get().save(response.body);
+                        } else {
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "login failed", Toast.LENGTH_SHORT).show());
+                        }
                     }
 
                     @Override
                     public void onError(ApiResponse<User> response) {
-
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "login failed " + response.message, Toast.LENGTH_SHORT).show());
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.REQUEST_LOGIN) {
+            Tencent.onActivityResultData(requestCode, resultCode, data, loginListener);
+        }
     }
 }

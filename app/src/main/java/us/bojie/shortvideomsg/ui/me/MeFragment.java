@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import us.bojie.libnavannotation.FragmentDestination;
 import us.bojie.shortvideomsg.R;
 
-@FragmentDestination(pageUrl = "main/tabs/my")
+@FragmentDestination(pageUrl = "main/tabs/my", needLogin = true)
 public class MeFragment extends Fragment {
     private static final String TAG = "MeFragment";
 

@@ -123,12 +123,12 @@ public class User implements Serializable {
         this.qqOpenId = qqOpenId;
     }
 
-    public int getExpires_time() {
+    public int getExpiresTime() {
         return expires_time;
     }
 
-    public void setExpires_time(int expires_time) {
-        this.expires_time = expires_time;
+    public void setExpiresTime(int expiresTime) {
+        this.expires_time = expiresTime;
     }
 
     public int getScore() {
