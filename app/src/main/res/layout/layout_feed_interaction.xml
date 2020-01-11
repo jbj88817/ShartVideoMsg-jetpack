@@ -9,9 +9,15 @@
             name="feed"
             type="Feed" />
 
+        <variable
+            name="lifeCycleOwner"
+            type="androidx.lifecycle.LifecycleOwner" />
+
         <import type="com.mooc.ppjoke.model.Feed" />
 
         <import type="com.mooc.ppjoke.utils.StringConvert" />
+
+        <import type="com.mooc.ppjoke.ui.home.InteractionPresenter" />
     </data>
 
     <LinearLayout
@@ -27,6 +33,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/color_white"
+            android:onClick="@{()->InteractionPresenter.toggleFeedLike(lifeCycleOwner,feed)}"
             android:text="@{feed.ugc.likeCount > 0 ? StringConvert.convertFeedUgc(feed.ugc.likeCount) : null}"
             android:textColor="@{feed.ugc.hasLiked ? @color/color_theme : @color/color_3d3}"
             android:textSize="@dimen/sp_14"
@@ -45,6 +52,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/color_white"
+            android:onClick="@{()->InteractionPresenter.toggleFeedDiss(lifeCycleOwner,feed)}"
             android:text="@string/dislike"
             android:textColor="@{feed.ugc.hasdiss ? @color/color_theme : @color/color_3d3}"
             android:textSize="@dimen/sp_14"

@@ -10,6 +10,10 @@ import androidx.paging.ItemKeyedDataSource;
 import androidx.paging.PagedList;
 
 import com.alibaba.fastjson.TypeReference;
+import com.mooc.ppjoke.model.Feed;
+import com.mooc.ppjoke.ui.AbsViewModel;
+import com.mooc.ppjoke.ui.MutableDataSource;
+import com.mooc.ppjoke.ui.login.UserManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,9 +24,6 @@ import us.bojie.libnetwork.ApiResponse;
 import us.bojie.libnetwork.ApiService;
 import us.bojie.libnetwork.JsonCallback;
 import us.bojie.libnetwork.Request;
-import com.mooc.ppjoke.model.Feed;
-import com.mooc.ppjoke.ui.AbsViewModel;
-import com.mooc.ppjoke.ui.MutableDataSource;
 
 public class HomeViewModel extends AbsViewModel<Feed> {
 
@@ -68,7 +69,7 @@ public class HomeViewModel extends AbsViewModel<Feed> {
 //        /feeds/queryHotFeedsList
         Request request = ApiService.get("/feeds/queryHotFeedsList")
                 .addParam("feedType", null)
-                .addParam("userId", 0)
+                .addParam("userId", UserManager.get().getUserId())
                 .addParam("feedId", key)
                 .addParam("pageCount", pageSize)
                 .responseType(new TypeReference<ArrayList<Feed>>() {

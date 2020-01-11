@@ -8,6 +8,10 @@
             name="feed"
             type="Feed" />
 
+        <variable
+            name="lifeCycleOwner"
+            type="androidx.lifecycle.LifecycleOwner" />
+
         <import type="com.mooc.ppjoke.model.Feed" />
 
     </data>
@@ -43,6 +47,7 @@
 
         <include
             layout="@layout/layout_feed_interaction"
-            app:feed="@{feed}" />
+            app:feed="@{feed}"
+            app:lifeCycleOwner="@{lifeCycleOwner}"/>
     </LinearLayout>
 </layout>
