@@ -32,4 +32,24 @@ public class PageListPlay {
         controlView = (PlayerControlView) LayoutInflater.from(application)
                 .inflate(R.layout.layout_exo_player_controller_view, null, false);
     }
+
+    public void release() {
+        if (mExoPlayer != null) {
+            mExoPlayer.setPlayWhenReady(false);
+            mExoPlayer.stop(true);
+            mExoPlayer.release();
+            mExoPlayer = null;
+        }
+
+        if (playerView != null) {
+            playerView.setPlayer(null);
+            playerView = null;
+        }
+
+        if (controlView != null) {
+            controlView.setPlayer(null);
+            controlView.setVisibilityListener(null);
+            controlView = null;
+        }
+    }
 }
