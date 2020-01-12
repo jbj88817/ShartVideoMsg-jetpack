@@ -19,6 +19,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/color_white"
         android:orientation="vertical"
         android:paddingTop="@dimen/dp_10">
 
@@ -43,11 +44,12 @@
 
         <include
             layout="@layout/layout_feed_top_comment"
-            app:comment="@{feed.topComment}" />
+            app:comment="@{feed.topComment}"
+            app:lifeCycleOwner="@{lifeCycleOwner}" />
 
         <include
             layout="@layout/layout_feed_interaction"
             app:feed="@{feed}"
-            app:lifeCycleOwner="@{lifeCycleOwner}"/>
+            app:lifeCycleOwner="@{lifeCycleOwner}" />
     </LinearLayout>
 </layout>

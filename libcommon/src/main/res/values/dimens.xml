@@ -19,4 +19,5 @@
     <dimen name="dp_45">45dp</dimen>
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_5">5dp</dimen>
+    <dimen name="sp_11">11sp</dimen>
 </resources>

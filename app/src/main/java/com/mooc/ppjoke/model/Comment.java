@@ -162,6 +162,9 @@ public class Comment implements Serializable {
     }
 
     public Ugc getUgc() {
+        if (ugc == null) {
+            ugc = new Ugc();
+        }
         return ugc;
     }
 

@@ -43,7 +43,8 @@
 
         <include
             layout="@layout/layout_feed_top_comment"
-            app:comment="@{feed.topComment}" />
+            app:comment="@{feed.topComment}"
+            app:lifeCycleOwner="@{lifeCycleOwner}"/>
 
         <include
             layout="@layout/layout_feed_interaction"

@@ -35,6 +35,7 @@ public class Ugc extends BaseObservable implements Serializable {
         this.likeCount = likeCount;
     }
 
+    @Bindable
     public int getShareCount() {
         return shareCount;
     }
