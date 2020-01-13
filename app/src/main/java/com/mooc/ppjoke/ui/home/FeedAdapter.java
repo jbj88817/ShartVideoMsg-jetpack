@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mooc.ppjoke.databinding.LayoutFeedTypeImageBinding;
 import com.mooc.ppjoke.databinding.LayoutFeedTypeVideoBinding;
 import com.mooc.ppjoke.model.Feed;
+import com.mooc.ppjoke.view.ListPlayerView;
 
 public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> {
 
@@ -65,6 +66,7 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ViewDataBinding mBinding;
+        private ListPlayerView listPlayerView;
 
         public ViewHolder(@NonNull View itemView, ViewDataBinding binding) {
             super(itemView);
@@ -81,8 +83,17 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
                 LayoutFeedTypeVideoBinding videoBinding = (LayoutFeedTypeVideoBinding) mBinding;
                 videoBinding.setLifeCycleOwner((LifecycleOwner) mContext);
                 videoBinding.setFeed(item);
-                videoBinding.listPlayerView.bindData(mCategory, item.getWidth(), item.getHeight(), item.getCover(), item.getUrl());
+                listPlayerView = videoBinding.listPlayerView;
+                listPlayerView.bindData(mCategory, item.getWidth(), item.getHeight(), item.getCover(), item.getUrl());
             }
+        }
+
+        public boolean isVideoItem() {
+            return mBinding instanceof LayoutFeedTypeVideoBinding;
+        }
+
+        public ListPlayerView getListPlayerView() {
+            return listPlayerView;
         }
     }
 }

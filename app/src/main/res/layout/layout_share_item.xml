@@ -25,5 +25,4 @@
         android:textSize="@dimen/sp_11"
         tools:text="Who to send" />
 
-
 </LinearLayout>

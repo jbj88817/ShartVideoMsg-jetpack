@@ -19,6 +19,7 @@ public class PageListPlay {
     public SimpleExoPlayer mExoPlayer;
     public PlayerView playerView;
     public PlayerControlView controlView;
+    public String playUrl;
 
     public PageListPlay() {
         Application application = AppGlobals.getApplication();
@@ -31,6 +32,9 @@ public class PageListPlay {
                 .inflate(R.layout.layout_exo_player_view, null, false);
         controlView = (PlayerControlView) LayoutInflater.from(application)
                 .inflate(R.layout.layout_exo_player_controller_view, null, false);
+
+        playerView.setPlayer(mExoPlayer);
+        controlView.setPlayer(mExoPlayer);
     }
 
     public void release() {
