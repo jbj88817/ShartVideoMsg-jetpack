@@ -24,6 +24,15 @@ import us.bojie.libnavannotation.FragmentDestination;
 public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
     private static final String TAG = "HomeFragment";
     private PageListPlayDetector playDetector;
+    private String feedType;
+
+    public static HomeFragment newInstance(String feedType) {
+        Bundle args = new Bundle();
+        args.putString("feedType", feedType);
+        HomeFragment fragment = new HomeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -35,7 +44,7 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
 
     @Override
     protected PagedListAdapter getAdapter() {
-        String feedType = getArguments() == null ? "all" : getArguments().getString("feedType");
+        feedType = getArguments() == null ? "all" : getArguments().getString("feedType");
         return new FeedAdapter(getContext(), feedType) {
             @Override
             public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
