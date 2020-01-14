@@ -52,8 +52,17 @@ public class PageListPlayDetector {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (playingTarget != null && playingTarget.isPlaying() && !isTargetInBounds(playingTarget)) {
-                    playingTarget.inActive();
+
+                if (dx == 0 && dy == 0) {
+                    //When AdapterDataObserver#onItemRangeInserted, maybe it's not on RecyclerView。
+                    //So now recyclerview.getChildCount() may equals 0。
+                    //When childView inflated on RecyclerView，it would call onScrolled()
+                    //and dx,dy are both equals 0
+                    autoPlay();
+                } else {
+                    if (playingTarget != null && playingTarget.isPlaying() && !isTargetInBounds(playingTarget)) {
+                        playingTarget.inActive();
+                    }
                 }
             }
         });
