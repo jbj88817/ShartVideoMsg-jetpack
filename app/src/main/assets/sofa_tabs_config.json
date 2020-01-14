@@ -1,0 +1,28 @@
+{
+  "activeSize": 16,
+  "normalSize": 14,
+  "activeColor": "#ED7282",
+  "normalColor": "#666666",
+  "select": 0,
+  "tabGravity": 0,
+  "tabs": [
+    {
+      "title": "Pics",
+      "index": 0,
+      "tag": "pics",
+      "enable": true
+    },
+    {
+      "title": "Video",
+      "index": 1,
+      "tag": "video",
+      "enable": true
+    },
+    {
+      "title": "Text",
+      "index": 2,
+      "tag": "text",
+      "enable": true
+    }
+  ]
+}

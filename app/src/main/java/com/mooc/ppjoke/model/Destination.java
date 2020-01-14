@@ -9,7 +9,7 @@ public class Destination {
      * needLogin : false
      * pageUrl : main/tabs/dash
      * id : 1862147327
-     * clazzName : com.mooc.ppjoke.ui.dashboard.DashboardFragment
+     * clazzName : com.mooc.ppjoke.ui.dashboard.SofaFragment
      */
 
     private boolean isFragment;
