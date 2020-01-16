@@ -4,6 +4,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,6 +129,18 @@ public class SofaFragment extends Fragment {
 
     private SofaTab getTabConfig() {
         return AppConfig.getsSofaTab();
+    }
+
+    @Override
+    public void onPause() {
+        Log.e(TAG, "onPause: ");
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        Log.e(TAG, "onResume: ");
+        super.onResume();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.mooc.ppjoke.ui.home;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -86,14 +87,35 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            playDetector.onPause();
+        } else {
+            playDetector.onResume();
+        }
+    }
+
+    @Override
     public void onPause() {
         playDetector.onPause();
+        Log.e(TAG, "onPause: feedtype" + feedType);
         super.onPause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        playDetector.onResume();
+        if (getParentFragment() != null) {
+            if (getParentFragment().isVisible() && isVisible()) {
+                Log.e(TAG, "onResume: feedtype" + feedType);
+                playDetector.onResume();
+            }
+        } else {
+            if (isVisible()) {
+                Log.e(TAG, "onResume: feedtype" + feedType);
+                playDetector.onResume();
+            }
+        }
     }
 }
