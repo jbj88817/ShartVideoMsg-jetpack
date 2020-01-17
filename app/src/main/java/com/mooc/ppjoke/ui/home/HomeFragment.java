@@ -41,6 +41,7 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
         mViewModel.getCacheLiveData().observe(this, feeds -> mAdapter.submitList(feeds));
 
         playDetector = new PageListPlayDetector(this, mRecyclerView);
+        mViewModel.setFeedType(feedType);
     }
 
     @Override
