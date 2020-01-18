@@ -3,27 +3,22 @@ package com.mooc.ppjoke;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mooc.ppjoke.model.Destination;
-import com.mooc.ppjoke.model.User;
 import com.mooc.ppjoke.ui.login.UserManager;
 import com.mooc.ppjoke.utils.AppConfig;
 import com.mooc.ppjoke.utils.NavGraphBuilder;
 import com.mooc.ppjoke.view.AppBottomBar;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 

@@ -2,8 +2,6 @@ package com.mooc.ppjoke.utils;
 
 import android.content.ComponentName;
 
-import java.util.HashMap;
-
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.ActivityNavigator;
 import androidx.navigation.NavController;
@@ -12,9 +10,12 @@ import androidx.navigation.NavGraphNavigator;
 import androidx.navigation.NavigatorProvider;
 import androidx.navigation.fragment.FragmentNavigator;
 
-import us.bojie.libcommon.AppGlobals;
-import com.mooc.ppjoke.navigator.FixFragmentNavigator;
 import com.mooc.ppjoke.model.Destination;
+import com.mooc.ppjoke.navigator.FixFragmentNavigator;
+
+import java.util.HashMap;
+
+import us.bojie.libcommon.AppGlobals;
 
 public class NavGraphBuilder {
     public static void build(NavController controller, FragmentActivity activity, int containerId) {

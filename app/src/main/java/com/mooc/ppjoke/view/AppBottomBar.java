@@ -12,13 +12,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
-
-import java.util.List;
-
 import com.mooc.ppjoke.R;
 import com.mooc.ppjoke.model.BottomBar;
 import com.mooc.ppjoke.model.Destination;
 import com.mooc.ppjoke.utils.AppConfig;
+
+import java.util.List;
 
 public class AppBottomBar extends BottomNavigationView {
 
@@ -26,7 +25,7 @@ public class AppBottomBar extends BottomNavigationView {
             R.drawable.icon_tab_publish, R.drawable.icon_tab_find, R.drawable.icon_tab_mine};
 
     public AppBottomBar(Context context) {
-        this(context, null);
+        this(context,  null);
     }
 
     public AppBottomBar(Context context, AttributeSet attrs) {
