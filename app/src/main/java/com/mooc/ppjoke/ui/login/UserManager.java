@@ -3,11 +3,11 @@ package com.mooc.ppjoke.ui.login;
 import android.content.Context;
 import android.content.Intent;
 
+import com.mooc.ppjoke.model.User;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import us.bojie.libnetwork.cache.CacheManager;
-import com.mooc.ppjoke.model.User;
 
 public class UserManager {
 
@@ -44,7 +44,7 @@ public class UserManager {
     }
 
     public boolean isLogin() {
-        return mUser == null ? false : mUser.getExpiresTime() > System.currentTimeMillis();
+        return mUser != null && mUser.getExpiresTime() > System.currentTimeMillis();
     }
 
     public User getUser() {
