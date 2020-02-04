@@ -2,10 +2,6 @@ package com.mooc.ppjoke.ui.home;
 
 import android.content.Context;
 
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-
 import com.alibaba.fastjson.JSONObject;
 import com.mooc.ppjoke.model.Comment;
 import com.mooc.ppjoke.model.Feed;
@@ -15,6 +11,9 @@ import com.mooc.ppjoke.ui.login.UserManager;
 
 import java.util.Date;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import us.bojie.libcommon.AppGlobals;
 import us.bojie.libnetwork.ApiResponse;
 import us.bojie.libnetwork.ApiService;
