@@ -26,7 +26,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import us.bojie.libcommon.PixUtils;
 
-public class ListPlayerView extends FrameLayout implements IPlayTarget, PlayerControlView.VisibilityListener, Player.EventListener {
+public class ListPlayerView extends FrameLayout implements IPlayTarget,
+        PlayerControlView.VisibilityListener, Player.EventListener {
+
     private View bufferView;
     private SVMImageView cover;
     private SVMImageView blur;
@@ -159,21 +161,22 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget, PlayerCo
         controlView.show();
 
         if (TextUtils.equals(pageListPlay.playUrl, mVideoUrl)) {
-
+            onPlayerStateChanged(true, Player.STATE_READY);
         } else {
             MediaSource mediaSource = PageListPlayManager.createMediaSource(mVideoUrl);
             exoPlayer.prepare(mediaSource);
             exoPlayer.setRepeatMode(Player.REPEAT_MODE_ONE);
-            exoPlayer.addListener(this);
+            pageListPlay.playUrl = mVideoUrl;
         }
 
+        exoPlayer.addListener(this);
         exoPlayer.setPlayWhenReady(true);
 
     }
 
     @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
         isPlaying = false;
         bufferView.setVisibility(GONE);
         cover.setVisibility(VISIBLE);
