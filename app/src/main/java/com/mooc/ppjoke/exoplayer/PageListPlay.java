@@ -56,4 +56,9 @@ public class PageListPlay {
             controlView = null;
         }
     }
+
+    public void switchPlayerView(PlayerView newPlayerView, boolean attach) {
+        playerView.setPlayer(attach ? null : mExoPlayer);
+        newPlayerView.setPlayer(attach ? mExoPlayer : null);
+    }
 }

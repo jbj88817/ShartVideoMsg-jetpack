@@ -12,9 +12,6 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -25,6 +22,8 @@ import com.mooc.ppjoke.exoplayer.IPlayTarget;
 import com.mooc.ppjoke.exoplayer.PageListPlay;
 import com.mooc.ppjoke.exoplayer.PageListPlayManager;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import us.bojie.libcommon.PixUtils;
 
 public class ListPlayerView extends FrameLayout implements IPlayTarget, PlayerControlView.VisibilityListener, Player.EventListener {
@@ -132,10 +131,16 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget, PlayerCo
         PlayerView playerView = pageListPlay.playerView;
         PlayerControlView controlView = pageListPlay.controlView;
         SimpleExoPlayer exoPlayer = pageListPlay.mExoPlayer;
+        if (playerView == null) {
+            return;
+        }
+
+        pageListPlay.switchPlayerView(playerView, true);
         ViewParent parent = playerView.getParent();
         if (parent != this) {
             if (parent != null) {
                 ((ViewGroup) parent).removeView(playerView);
+                ((ListPlayerView) parent).inActive();
             }
             ViewGroup.LayoutParams params = cover.getLayoutParams();
             this.addView(playerView, 1, params);

@@ -22,13 +22,15 @@ import us.bojie.libcommon.AppGlobals;
 public class PageListPlayManager {
 
     private static final ProgressiveMediaSource.Factory mediaSourceFactory;
+    private static HashMap<String, PageListPlay> stringPageListPlayHashMap = new HashMap<>();
 
     static {
         Application application = AppGlobals.getApplication();
         DefaultHttpDataSourceFactory dataSourceFactory =
                 new DefaultHttpDataSourceFactory(Util.getUserAgent(application, application.getPackageName()));
         Cache cache = new SimpleCache(application.getCacheDir(),
-                new LeastRecentlyUsedCacheEvictor(1024 * 1024 * 200));
+                new LeastRecentlyUsedCacheEvictor(1024 * 1024 * 200),
+                null,null, false, true);
         CacheDataSinkFactory cacheDataSinkFactory = new CacheDataSinkFactory(cache, Long.MAX_VALUE);
         CacheDataSourceFactory cacheDataSourceFactory = new CacheDataSourceFactory(cache, dataSourceFactory, new FileDataSourceFactory(),
                 cacheDataSinkFactory, CacheDataSource.FLAG_BLOCK_ON_CACHE, null);
@@ -38,8 +40,6 @@ public class PageListPlayManager {
     public static MediaSource createMediaSource(String url) {
         return mediaSourceFactory.createMediaSource(Uri.parse(url));
     }
-
-    private static HashMap<String, PageListPlay> stringPageListPlayHashMap = new HashMap<>();
 
     public static PageListPlay get(String pageName) {
         PageListPlay pageListPlay = stringPageListPlayHashMap.get(pageName);
