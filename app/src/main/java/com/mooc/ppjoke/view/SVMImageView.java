@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
@@ -15,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.databinding.BindingAdapter;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import us.bojie.libcommon.PixUtils;
 
@@ -77,8 +78,14 @@ public class SVMImageView extends AppCompatImageView {
             finalWidth = (int) (width / (height * 1.0f / finalHeight));
         }
 
-        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(finalWidth, finalHeight);
-        params.leftMargin = height > width ? PixUtils.dp2px(marginLeft) : 0;
+        ViewGroup.LayoutParams params = getLayoutParams();
+        params.width = finalWidth;
+        params.height = finalHeight;
+        if (params instanceof FrameLayout.LayoutParams) {
+            ((FrameLayout.LayoutParams) params).leftMargin = height > width ? PixUtils.dp2px(marginLeft) : 0;
+        } else if (params instanceof LinearLayout.LayoutParams) {
+            ((LinearLayout.LayoutParams) params).leftMargin = height > width ? PixUtils.dp2px(marginLeft) : 0;
+        }
         setLayoutParams(params);
     }
 

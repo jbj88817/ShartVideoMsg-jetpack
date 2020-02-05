@@ -1,10 +1,10 @@
 package com.mooc.ppjoke.model;
 
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
-
 import java.io.Serializable;
 import java.util.Objects;
+
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 
 public class Feed extends BaseObservable implements Serializable {
 
@@ -29,7 +29,7 @@ public class Feed extends BaseObservable implements Serializable {
     private int id;
     private long itemId;
     private int itemType;
-    private int createTime;
+    private long createTime;
     private double duration;
     private String feeds_text;
     private long authorId;
@@ -67,11 +67,11 @@ public class Feed extends BaseObservable implements Serializable {
         this.itemType = itemType;
     }
 
-    public int getCreateTime() {
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(int createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 
