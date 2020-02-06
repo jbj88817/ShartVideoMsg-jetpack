@@ -10,12 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
-
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.mooc.ppjoke.databinding.FragmentSofaBinding;
@@ -28,6 +22,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 import us.bojie.libnavannotation.FragmentDestination;
 
 @FragmentDestination(pageUrl = "main/tabs/sofa")
@@ -82,11 +81,9 @@ public class SofaFragment extends Fragment {
         mediator = new TabLayoutMediator(tabLayout, viewPager, false, (tab, position) -> {
             tab.setCustomView(makeTabView(position));
         });
-
         mediator.attach();
 
         viewPager.registerOnPageChangeCallback(mOnPageChangeCallback);
-
         viewPager.post(() -> viewPager.setCurrentItem(tabConfig.select));
     }
 
