@@ -5,4 +5,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="dislike">Dis</string>
     <string name="login_text">QQ Login</string>
+    <string name="following">following</string>
+    <string name="follow">follow</string>
 </resources>
