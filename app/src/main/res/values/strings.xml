@@ -3,8 +3,13 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="like">Like</string>
     <string name="dislike">Dis</string>
     <string name="login_text">QQ Login</string>
     <string name="following">following</string>
     <string name="follow">follow</string>
+    <string name="feed_detail_hint">GOGOGO</string>
+    <string name="bookmark">bookmark</string>
+    <string name="bookmarked">bookmarked</string>
+    <string name="share">share</string>
 </resources>

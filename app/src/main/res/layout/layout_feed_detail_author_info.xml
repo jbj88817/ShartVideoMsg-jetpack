@@ -78,7 +78,7 @@
             android:paddingTop="@dimen/dp_5"
             android:paddingRight="@dimen/dp_16"
             android:paddingBottom="@dimen/dp_5"
-            android:text="{feed.author.hasFollow?@string/following:@string/follow}"
+            android:text="@{feed.author.hasFollow?@string/following:@string/follow}"
             android:textColor="@color/color_white"
             app:cornerRadius="@dimen/dp_13"
             app:layout_constraintBottom_toBottomOf="parent"
