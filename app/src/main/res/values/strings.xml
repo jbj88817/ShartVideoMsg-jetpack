@@ -13,4 +13,5 @@
     <string name="bookmarked">bookmarked</string>
     <string name="share">share</string>
     <string name="feed_detail_type_image_title">Post Detail</string>
+    <string name="author">Author</string>
 </resources>

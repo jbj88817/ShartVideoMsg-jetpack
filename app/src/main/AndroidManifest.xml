@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/launcher"
         android:usesCleartextTraffic="true">
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -26,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.detail.FeedDetailActivity" />
 
         <!--    for QQ login-->
         <activity
