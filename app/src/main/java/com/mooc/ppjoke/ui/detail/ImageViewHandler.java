@@ -21,18 +21,20 @@ public class ImageViewHandler extends ViewHandler {
 
     public ImageViewHandler(FragmentActivity activity) {
         super(activity);
-
         mImageBinding = DataBindingUtil.setContentView(activity, R.layout.activity_feed_detail_type_image);
-        mImageBinding.setFeed(mFeed);
         mRecyclerView = mImageBinding.recyclerView;
         mInteractionBinding = mImageBinding.bottomInteractionLayout;
+        mImageBinding.actionClose.setOnClickListener(v -> mActivity.finish());
     }
 
     @Override
     public void bindInitData(Feed feed) {
         super.bindInitData(feed);
-        mHeaderBinding = LayoutFeedDetailTypeImageHeaderBinding.inflate(LayoutInflater.from(mActivity), mRecyclerView, false);
         mImageBinding.setFeed(mFeed);
+
+        mHeaderBinding = LayoutFeedDetailTypeImageHeaderBinding.inflate(LayoutInflater.from(mActivity), mRecyclerView, false);
+        mHeaderBinding.setFeed(mFeed);
+
         SVMImageView headerImage = mHeaderBinding.headerImage;
         int width = mFeed.getWidth();
         int height = mFeed.getHeight();
@@ -48,5 +50,6 @@ public class ImageViewHandler extends ViewHandler {
                 mImageBinding.title.setVisibility(visible ? View.GONE : View.VISIBLE);
             }
         });
+        handleEmpty(false);
     }
 }

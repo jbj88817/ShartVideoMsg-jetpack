@@ -22,6 +22,7 @@
             android:layout_height="@dimen/dp_50">
 
             <ImageView
+                android:id="@+id/action_close"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -39,12 +40,6 @@
                 android:textColor="@color/color_000"
                 android:textSize="@dimen/sp_16" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_gravity="bottom"
-                android:background="@color/color_gray2" />
-
             <include
                 android:id="@+id/author_info_layout"
                 layout="@layout/layout_feed_detail_author_info"
@@ -52,6 +47,12 @@
                 app:feed="@{feed}"
                 app:fullscreen="@{false}"
                 app:leftMargin="@{PixUtils.dp2px(60)}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="bottom"
+                android:background="@color/color_divider" />
         </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView

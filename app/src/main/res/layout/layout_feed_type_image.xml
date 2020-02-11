@@ -29,7 +29,8 @@
 
         <include
             layout="@layout/layout_feed_text"
-            app:feedText="@{feed.feeds_text}" />
+            app:feedText="@{feed.feeds_text}"
+            app:lines="@{3}" />
 
         <!-- photos -->
         <com.mooc.ppjoke.view.SVMImageView

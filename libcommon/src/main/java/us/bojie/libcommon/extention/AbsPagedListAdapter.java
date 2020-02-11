@@ -74,7 +74,9 @@ public abstract class AbsPagedListAdapter<T, VH extends RecyclerView.ViewHolder>
         return getItemViewType2(position);
     }
 
-    protected abstract int getItemViewType2(int position);
+    protected int getItemViewType2(int position) {
+        return 0;
+    }
 
     private boolean isFooterPosition(int position) {
         return position >= getOriginalItemCount() + mHeaders.size();

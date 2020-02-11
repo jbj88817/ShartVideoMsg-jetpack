@@ -7,13 +7,13 @@ public class TimeUtils {
         long timeInMillis = Calendar.getInstance().getTimeInMillis();
         long diff = (timeInMillis - time) / 1000;
         if (diff < 60) {
-            return diff + "secs ago";
+            return diff + " secs ago";
         } else if (diff < 3600) {
-            return diff / 60 + "mins ago";
+            return diff / 60 + " mins ago";
         } else if (diff < 3600 * 24) {
-            return diff / 3600 + "hours ago";
+            return diff / 3600 + " hours ago";
         } else {
-            return diff / (3600 * 24) + "days ago";
+            return diff / (3600 * 24) + " days ago";
         }
     }
 }

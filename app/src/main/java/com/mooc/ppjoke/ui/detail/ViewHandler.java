@@ -45,7 +45,7 @@ public abstract class ViewHandler {
     }
 
 
-    private void handleEmpty(boolean hasData) {
+    protected void handleEmpty(boolean hasData) {
         if (hasData) {
             if (mEmptyView != null) {
                 listAdapter.removeHeaderView(mEmptyView);

@@ -31,11 +31,6 @@ public class FeedCommentAdapter extends AbsPagedListAdapter<Comment, FeedComment
     }
 
     @Override
-    protected int getItemViewType2(int position) {
-        return 0;
-    }
-
-    @Override
     protected ViewHolder onCreateViewHolder2(ViewGroup parent, int viewType) {
         LayoutFeedCommentListItemBinding binding = LayoutFeedCommentListItemBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
@@ -60,11 +55,9 @@ public class FeedCommentAdapter extends AbsPagedListAdapter<Comment, FeedComment
 
         public void bindData(Comment item) {
             mBinding.setComment(item);
-            long userId = UserManager.get().getUserId();
-            long authorId = item.getAuthor()
-                    .getUserId();
-            mBinding.labelAuthor.setVisibility(userId == authorId ? View.VISIBLE : View.GONE);
-            mBinding.commentDelete.setVisibility(userId == authorId ? View.VISIBLE : View.GONE);
+            boolean self = item.getAuthor() != null && UserManager.get().getUserId() == item.getAuthor().getUserId();
+            mBinding.labelAuthor.setVisibility(self ? View.VISIBLE : View.GONE);
+            mBinding.commentDelete.setVisibility(self ? View.VISIBLE : View.GONE);
             if (!TextUtils.isEmpty(item.getImageUrl())) {
                 mBinding.commentCover.setVisibility(View.VISIBLE);
                 mBinding.commentCover.bindData(item.getWidth(), item.getHeight(), 0,
@@ -77,6 +70,7 @@ public class FeedCommentAdapter extends AbsPagedListAdapter<Comment, FeedComment
             } else {
                 mBinding.commentCover.setVisibility(View.GONE);
                 mBinding.videoIcon.setVisibility(View.GONE);
+                mBinding.commentExt.setVisibility(View.GONE);
             }
         }
     }
