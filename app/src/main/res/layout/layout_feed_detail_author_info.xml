@@ -17,7 +17,13 @@
             name="fullscreen"
             type="java.lang.Boolean" />
 
+        <variable
+            name="owner"
+            type="androidx.lifecycle.LifecycleOwner" />
+
         <import type="com.mooc.ppjoke.utils.TimeUtils" />
+
+        <import type="com.mooc.ppjoke.ui.home.InteractionPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,20 +78,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_16"
-            android:backgroundTint="@{fullscreen ? @color/transparent : @color/color_theme}"
+            android:backgroundTint="@{fullscreen?@color/transparent:@color/color_theme}"
             android:gravity="center"
+            android:onClick="@{()->InteractionPresenter.toggleFollowUser(owner,feed)}"
             android:paddingLeft="@dimen/dp_16"
             android:paddingTop="@dimen/dp_5"
             android:paddingRight="@dimen/dp_16"
             android:paddingBottom="@dimen/dp_5"
             android:text="@{feed.author.hasFollow?@string/following:@string/follow}"
             android:textColor="@color/color_white"
+            android:textSize="@dimen/sp_14"
+            app:backgroundTint="@color/color_theme"
             app:cornerRadius="@dimen/dp_13"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@color/color_white"
-            app:strokeWidth="@dimen/dp_2"
+            app:strokeColor="@{fullscreen?@color/color_white:@color/transparent}"
+            app:strokeWidth="@dimen/dp_1"
             tools:text="@string/follow" />
 
 

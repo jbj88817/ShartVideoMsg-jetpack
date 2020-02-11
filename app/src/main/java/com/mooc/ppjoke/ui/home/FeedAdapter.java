@@ -5,17 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mooc.ppjoke.databinding.LayoutFeedTypeImageBinding;
+import com.mooc.ppjoke.databinding.LayoutFeedTypeVideoBinding;
+import com.mooc.ppjoke.model.Feed;
+import com.mooc.ppjoke.ui.detail.FeedDetailActivity;
+import com.mooc.ppjoke.view.ListPlayerView;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.mooc.ppjoke.databinding.LayoutFeedTypeImageBinding;
-import com.mooc.ppjoke.databinding.LayoutFeedTypeVideoBinding;
-import com.mooc.ppjoke.model.Feed;
-import com.mooc.ppjoke.view.ListPlayerView;
 
 public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> {
 
@@ -62,6 +63,7 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bindData(getItem(position));
+        holder.itemView.setOnClickListener(v -> FeedDetailActivity.startFeedDetailActivity(mContext, getItem(position), mCategory));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

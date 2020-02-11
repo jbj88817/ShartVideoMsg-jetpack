@@ -1,6 +1,7 @@
 package com.mooc.ppjoke.ui.home;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mooc.ppjoke.model.Comment;
@@ -11,6 +12,7 @@ import com.mooc.ppjoke.ui.login.UserManager;
 
 import java.util.Date;
 
+import androidx.arch.core.executor.ArchTaskExecutor;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -144,6 +146,71 @@ public class InteractionPresenter {
                         }
                     }
                 });
+    }
+
+    public static void toggleFeedFavorite(LifecycleOwner owner, Feed feed) {
+
+        if (!UserManager.get().isLogin()) {
+            UserManager.get().login(AppGlobals.getApplication()).observe(owner, user -> {
+                if (user != null) {
+                    toggleFeedFavorite(feed);
+                }
+            });
+        } else {
+            toggleFeedFavorite(feed);
+        }
+    }
+
+    private static void toggleFeedFavorite(Feed feed) {
+        ApiService.get("/ugc/toggleFavorite")
+                .addParam("itemId", feed.getItemId())
+                .addParam("userId", UserManager.get().getUserId())
+                .execute(new JsonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(ApiResponse<JSONObject> response) {
+                        if (response.body != null) {
+                            boolean hasFavorite = response.body.getBooleanValue("hasFavorite");
+                            feed.getUgc().setHasFavorite(hasFavorite);
+                        }
+                    }
+
+                    @Override
+                    public void onError(ApiResponse<JSONObject> response) {
+                        showToast(response.message);
+                    }
+                });
+    }
+
+    public static void toggleFollowUser(LifecycleOwner owner, Feed feed) {
+        if (!UserManager.get().isLogin()) {
+            UserManager.get().login(AppGlobals.getApplication()).observe(owner, user -> toggleFollowUser(feed));
+        } else {
+            toggleFollowUser(feed);
+        }
+    }
+
+    private static void toggleFollowUser(Feed feed) {
+        ApiService.get("/ugc/toggleUserFollow")
+                .addParam("followUserId", UserManager.get().getUserId())
+                .addParam("userId", feed.getAuthor().getUserId())
+                .execute(new JsonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(ApiResponse<JSONObject> response) {
+                        if (response.body != null) {
+                            boolean hasFollow = response.body.getBooleanValue("hasLiked");
+                            feed.getAuthor().setHasFollow(hasFollow);
+                        }
+                    }
+
+                    @Override
+                    public void onError(ApiResponse<JSONObject> response) {
+                        showToast(response.message);
+                    }
+                });
+    }
+
+    private static void showToast(String message) {
+        ArchTaskExecutor.getMainThreadExecutor().execute(() -> Toast.makeText(AppGlobals.getApplication(), message, Toast.LENGTH_SHORT).show());
     }
 
 }

@@ -31,6 +31,7 @@ public abstract class ViewHandler {
     @CallSuper
     public void bindInitData(Feed feed) {
         mFeed = feed;
+        mInteractionBinding.setOwner(mActivity);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setItemAnimator(null);
         listAdapter = new FeedCommentAdapter();

@@ -1,11 +1,11 @@
 package com.mooc.ppjoke.model;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
-
-import java.io.Serializable;
-import java.util.Objects;
 
 public class Ugc extends BaseObservable implements Serializable {
 
@@ -52,12 +52,14 @@ public class Ugc extends BaseObservable implements Serializable {
         this.commentCount = commentCount;
     }
 
+    @Bindable
     public boolean isHasFavorite() {
         return hasFavorite;
     }
 
     public void setHasFavorite(boolean hasFavorite) {
         this.hasFavorite = hasFavorite;
+        notifyPropertyChanged(BR._all);
     }
 
     @Bindable

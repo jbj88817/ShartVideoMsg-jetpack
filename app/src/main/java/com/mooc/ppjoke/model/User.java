@@ -3,7 +3,10 @@ package com.mooc.ppjoke.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class User implements Serializable {
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+public class User extends BaseObservable implements Serializable {
 
     /**
      * id : 962
@@ -171,12 +174,14 @@ public class User implements Serializable {
         this.feedCount = feedCount;
     }
 
+    @Bindable
     public boolean isHasFollow() {
         return hasFollow;
     }
 
     public void setHasFollow(boolean hasFollow) {
         this.hasFollow = hasFollow;
+        notifyPropertyChanged(com.mooc.ppjoke.BR._all);
     }
 
     @Override
