@@ -35,6 +35,20 @@ public abstract class AbsPagedListAdapter<T, VH extends RecyclerView.ViewHolder>
         }
     }
 
+    public void removeHeaderView(View view) {
+        int index = mHeaders.indexOfValue(view);
+        if (index < 0) return;
+        mHeaders.removeAt(index);
+        notifyDataSetChanged();
+    }
+
+    public void removeFooterView(View view) {
+        int index = mFooters.indexOfValue(view);
+        if (index < 0) return;
+        mFooters.removeAt(index);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         int itemCount = super.getItemCount();
