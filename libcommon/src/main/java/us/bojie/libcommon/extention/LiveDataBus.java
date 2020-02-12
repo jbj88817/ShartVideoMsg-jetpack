@@ -67,13 +67,13 @@ public class LiveDataBus {
         }
 
         @Override
-        protected void setValue(T value) {
+        public void setValue(T value) {
             mVersion++;
             super.setValue(value);
         }
 
         @Override
-        protected void postValue(T value) {
+        public void postValue(T value) {
             mVersion++;
             super.postValue(value);
         }

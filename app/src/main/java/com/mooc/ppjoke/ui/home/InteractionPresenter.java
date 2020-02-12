@@ -17,11 +17,14 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import us.bojie.libcommon.AppGlobals;
+import us.bojie.libcommon.extention.LiveDataBus;
 import us.bojie.libnetwork.ApiResponse;
 import us.bojie.libnetwork.ApiService;
 import us.bojie.libnetwork.JsonCallback;
 
 public class InteractionPresenter {
+    public static final String DATA_FROM_INTERACTION = "data_from_interaction";
+
     private static final String URL_TOGGLE_FEED_LIK = "/ugc/toggleFeedLike";
 
     private static final String URL_TOGGLE_FEED_DISS = "/ugc/dissFeed";
@@ -57,6 +60,8 @@ public class InteractionPresenter {
                         if (response.body != null) {
                             boolean hasLiked = response.body.getBoolean("hasLiked").booleanValue();
                             feed.getUgc().setHasLiked(hasLiked);
+                            LiveDataBus.get().with(DATA_FROM_INTERACTION)
+                                    .postValue(feed);
                         }
 
                     }
@@ -171,6 +176,8 @@ public class InteractionPresenter {
                         if (response.body != null) {
                             boolean hasFavorite = response.body.getBooleanValue("hasFavorite");
                             feed.getUgc().setHasFavorite(hasFavorite);
+                            LiveDataBus.get().with(DATA_FROM_INTERACTION)
+                                    .postValue(feed);
                         }
                     }
 
@@ -199,6 +206,8 @@ public class InteractionPresenter {
                         if (response.body != null) {
                             boolean hasFollow = response.body.getBooleanValue("hasLiked");
                             feed.getAuthor().setHasFollow(hasFollow);
+                            LiveDataBus.get().with(DATA_FROM_INTERACTION)
+                                    .postValue(feed);
                         }
                     }
 
