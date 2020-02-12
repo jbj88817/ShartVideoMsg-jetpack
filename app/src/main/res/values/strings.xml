@@ -15,4 +15,6 @@
     <string name="feed_detail_type_image_title">Post Detail</string>
     <string name="author">Author</string>
     <string name="feed_comment_empty">No comments Yet!</string>
+    <string name="comment_hint">Yuppp!</string>
+    <string name="comment_send">Send</string>
 </resources>

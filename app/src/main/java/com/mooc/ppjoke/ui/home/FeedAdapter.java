@@ -69,16 +69,13 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Feed feed = getItem(position);
         holder.bindData(feed);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FeedDetailActivity.startFeedDetailActivity(mContext, feed, mCategory);
-                if (mFeedObserver == null) {
-                    mFeedObserver = new FeedObserver();
-                    LiveDataBus.get().with(DATA_FROM_INTERACTION).observe((LifecycleOwner) mContext, mFeedObserver);
-                }
-                mFeedObserver.setFeed(feed);
+        holder.itemView.setOnClickListener(v -> {
+            FeedDetailActivity.startFeedDetailActivity(mContext, feed, mCategory);
+            if (mFeedObserver == null) {
+                mFeedObserver = new FeedObserver();
+                LiveDataBus.get().with(DATA_FROM_INTERACTION).observe((LifecycleOwner) mContext, mFeedObserver);
             }
+            mFeedObserver.setFeed(feed);
         });
     }
 
