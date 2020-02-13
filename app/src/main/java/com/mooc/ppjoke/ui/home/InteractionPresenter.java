@@ -1,5 +1,6 @@
 package com.mooc.ppjoke.ui.home;
 
+import android.app.AlertDialog;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSONObject;
@@ -13,6 +14,7 @@ import java.util.Date;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import us.bojie.libcommon.AppGlobals;
 import us.bojie.libcommon.extention.LiveDataBus;
@@ -217,4 +219,40 @@ public class InteractionPresenter {
                     }
                 });
     }
+
+    public static LiveData<Boolean> deleteFeedComment(Context context, long itemId, long commentId) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        new AlertDialog.Builder(context)
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .setPositiveButton("Remove", (dialog, which) -> {
+                    deleteFeedComment(liveData, itemId, commentId);
+                    dialog.dismiss();
+                }).setMessage("Are you sure want to remove the post?").create().show();
+
+        return liveData;
+    }
+
+    private static void deleteFeedComment(MutableLiveData<Boolean> liveData, long itemId, long commentId) {
+        ApiService.get("/comment/deleteComment")
+                .addParam("userId", UserManager.get().getUserId())
+                .addParam("commentId", commentId)
+                .addParam("itemId",itemId)
+                .execute(new JsonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(ApiResponse<JSONObject> response) {
+                        if (response.body != null) {
+                            boolean result = response.body.getBoolean("result");
+                            liveData.postValue(result);
+                            showToast("Remove comment succeed");
+                        }
+                    }
+
+                    @Override
+                    public void onError(ApiResponse<JSONObject> response) {
+                        showToast(response.message);
+                    }
+                });
+    }
+
+
 }

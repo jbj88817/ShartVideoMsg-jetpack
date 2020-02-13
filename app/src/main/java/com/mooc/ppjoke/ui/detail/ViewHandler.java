@@ -40,7 +40,7 @@ public abstract class ViewHandler {
         mInteractionBinding.setOwner(mActivity);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setItemAnimator(null);
-        listAdapter = new FeedCommentAdapter();
+        listAdapter = new FeedCommentAdapter(mActivity);
         mRecyclerView.setAdapter(listAdapter);
 
         viewModel.setItemId(mFeed.getItemId());
