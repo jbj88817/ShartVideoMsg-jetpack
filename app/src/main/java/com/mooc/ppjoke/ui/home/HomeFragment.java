@@ -14,7 +14,7 @@ import androidx.paging.PagedListAdapter;
 import com.mooc.ppjoke.exoplayer.PageListPlayDetector;
 import com.mooc.ppjoke.model.Feed;
 import com.mooc.ppjoke.ui.AbsListFragment;
-import com.mooc.ppjoke.ui.MutableDataSource;
+import com.mooc.ppjoke.ui.MutablePageKeyedDataSource;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.List;
@@ -72,7 +72,7 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
             public void onResult(@NonNull List<Feed> data) {
                 PagedList.Config config = mAdapter.getCurrentList().getConfig();
                 if (data != null && data.size() > 0) {
-                    MutableDataSource dataSource = new MutableDataSource();
+                    MutablePageKeyedDataSource dataSource = new MutablePageKeyedDataSource();
                     dataSource.data.addAll(mAdapter.getCurrentList());
                     dataSource.data.addAll(data);
                     PagedList pagedList = dataSource.buildNewPagedList(config);

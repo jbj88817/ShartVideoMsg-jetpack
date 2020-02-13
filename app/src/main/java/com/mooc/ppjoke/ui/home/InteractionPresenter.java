@@ -1,7 +1,6 @@
 package com.mooc.ppjoke.ui.home;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mooc.ppjoke.model.Comment;
@@ -12,7 +11,6 @@ import com.mooc.ppjoke.ui.login.UserManager;
 
 import java.util.Date;
 
-import androidx.arch.core.executor.ArchTaskExecutor;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -21,6 +19,8 @@ import us.bojie.libcommon.extention.LiveDataBus;
 import us.bojie.libnetwork.ApiResponse;
 import us.bojie.libnetwork.ApiService;
 import us.bojie.libnetwork.JsonCallback;
+
+import static us.bojie.libcommon.utils.ToastUtils.showToast;
 
 public class InteractionPresenter {
     public static final String DATA_FROM_INTERACTION = "data_from_interaction";
@@ -217,9 +217,4 @@ public class InteractionPresenter {
                     }
                 });
     }
-
-    private static void showToast(String message) {
-        ArchTaskExecutor.getMainThreadExecutor().execute(() -> Toast.makeText(AppGlobals.getApplication(), message, Toast.LENGTH_SHORT).show());
-    }
-
 }

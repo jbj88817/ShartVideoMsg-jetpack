@@ -17,4 +17,5 @@
     <string name="feed_comment_empty">No comments Yet!</string>
     <string name="comment_hint">Yuppp!</string>
     <string name="comment_send">Send</string>
+    <string name="comment_failed">Comment failed</string>
 </resources>

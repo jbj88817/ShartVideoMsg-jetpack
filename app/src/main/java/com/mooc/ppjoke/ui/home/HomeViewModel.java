@@ -12,7 +12,7 @@ import androidx.paging.PagedList;
 import com.alibaba.fastjson.TypeReference;
 import com.mooc.ppjoke.model.Feed;
 import com.mooc.ppjoke.ui.AbsViewModel;
-import com.mooc.ppjoke.ui.MutableDataSource;
+import com.mooc.ppjoke.ui.MutablePageKeyedDataSource;
 import com.mooc.ppjoke.ui.login.UserManager;
 
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class HomeViewModel extends AbsViewModel<Feed> {
                 public void onCacheSuccess(ApiResponse<List<Feed>> response) {
                     Log.d(TAG, "onCacheSuccess: ");
                     List<Feed> body = response.body;
-                    MutableDataSource<Integer, Feed> dataSource = new MutableDataSource<>();
+                    MutablePageKeyedDataSource<Integer, Feed> dataSource = new MutablePageKeyedDataSource<>();
                     dataSource.data.addAll(body);
                     PagedList pagedList = dataSource.buildNewPagedList(config);
                     cacheLiveData.postValue(pagedList);

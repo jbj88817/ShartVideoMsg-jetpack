@@ -1,15 +1,15 @@
 package com.mooc.ppjoke.ui;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.arch.core.executor.ArchTaskExecutor;
 import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class MutableDataSource<Key, Value> extends PageKeyedDataSource<Key, Value> {
+public class MutablePageKeyedDataSource<Key, Value> extends PageKeyedDataSource<Key, Value> {
 
     public List<Value> data = new ArrayList<>();
 
