@@ -33,7 +33,7 @@
             app:lines="@{3}" />
 
         <!-- photos -->
-        <com.mooc.ppjoke.view.SVMImageView
+        <com.mooc.ppjoke.view.PPImageView
             android:id="@+id/feed_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

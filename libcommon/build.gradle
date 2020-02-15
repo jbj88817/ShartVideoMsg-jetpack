@@ -59,5 +59,12 @@ dependencies {
     api 'com.google.android.exoplayer:exoplayer-dash:2.10.4'
     api 'com.google.android.exoplayer:exoplayer-ui:2.10.4'
 
+    api 'androidx.camera:camera-core:1.0.0-alpha10'
+    api 'androidx.camera:camera-camera2:1.0.0-alpha10'
+    api 'androidx.camera:camera-view:1.0.0-alpha07'
+    api 'androidx.camera:camera-extensions:1.0.0-alpha07'
+
+    api 'com.github.chrisbanes:PhotoView:2.3.0@aar'
+
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }

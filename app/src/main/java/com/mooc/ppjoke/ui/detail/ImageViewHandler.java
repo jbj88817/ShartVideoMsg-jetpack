@@ -7,7 +7,7 @@ import com.mooc.ppjoke.R;
 import com.mooc.ppjoke.databinding.ActivityFeedDetailTypeImageBinding;
 import com.mooc.ppjoke.databinding.LayoutFeedDetailTypeImageHeaderBinding;
 import com.mooc.ppjoke.model.Feed;
-import com.mooc.ppjoke.view.SVMImageView;
+import com.mooc.ppjoke.view.PPImageView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -35,7 +35,7 @@ public class ImageViewHandler extends ViewHandler {
         mHeaderBinding = LayoutFeedDetailTypeImageHeaderBinding.inflate(LayoutInflater.from(mActivity), mRecyclerView, false);
         mHeaderBinding.setFeed(mFeed);
 
-        SVMImageView headerImage = mHeaderBinding.headerImage;
+        PPImageView headerImage = mHeaderBinding.headerImage;
         int width = mFeed.getWidth();
         int height = mFeed.getHeight();
         headerImage.bindData(width, height, width > height ? 0 : 16, mFeed.getCover());

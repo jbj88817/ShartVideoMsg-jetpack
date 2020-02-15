@@ -52,7 +52,7 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:orientation="horizontal">
 
-                <com.mooc.ppjoke.view.SVMImageView
+                <com.mooc.ppjoke.view.PPImageView
                     android:id="@+id/avatar"
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
@@ -114,7 +114,7 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:visibility="@{TextUtils.isEmpty(comment.imageUrl)?View.GONE:View.VISIBLE}">
 
-                <com.mooc.ppjoke.view.SVMImageView
+                <com.mooc.ppjoke.view.PPImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"

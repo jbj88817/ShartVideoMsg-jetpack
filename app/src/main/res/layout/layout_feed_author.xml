@@ -21,7 +21,7 @@
         android:paddingStart="@dimen/dp_16"
         android:paddingEnd="@dimen/dp_16">
 
-        <com.mooc.ppjoke.view.SVMImageView
+        <com.mooc.ppjoke.view.PPImageView
             android:id="@+id/avatar"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"

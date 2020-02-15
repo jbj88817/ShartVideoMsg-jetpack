@@ -20,21 +20,21 @@ import androidx.databinding.BindingAdapter;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import us.bojie.libcommon.PixUtils;
 
-public class SVMImageView extends AppCompatImageView {
-    public SVMImageView(Context context) {
+public class PPImageView extends AppCompatImageView {
+    public PPImageView(Context context) {
         super(context);
     }
 
-    public SVMImageView(Context context, AttributeSet attrs) {
+    public PPImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SVMImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PPImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @BindingAdapter(value = {"image_url", "isCircle"}, requireAll = false)
-    public static void setImageUrl(SVMImageView view, String imageUrl, boolean isCircle) {
+    public static void setImageUrl(PPImageView view, String imageUrl, boolean isCircle) {
         RequestBuilder<Drawable> builder = Glide.with(view).load(imageUrl);
         if (isCircle) {
             builder.transform(new CircleCrop());

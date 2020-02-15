@@ -23,7 +23,7 @@
             android:layout_marginBottom="@dimen/dp_5"
             android:visibility="gone">
 
-            <com.mooc.ppjoke.view.SVMImageView
+            <com.mooc.ppjoke.view.PPImageView
                 android:id="@+id/comment_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

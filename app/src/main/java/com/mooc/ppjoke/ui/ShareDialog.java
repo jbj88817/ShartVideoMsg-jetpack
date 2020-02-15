@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mooc.ppjoke.R;
-import com.mooc.ppjoke.view.SVMImageView;
+import com.mooc.ppjoke.view.PPImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +115,7 @@ public class ShareDialog extends AlertDialog {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ResolveInfo info = shareItems.get(position);
-            SVMImageView imageView = holder.itemView.findViewById(R.id.share_icon);
+            PPImageView imageView = holder.itemView.findViewById(R.id.share_icon);
             Drawable drawable = info.loadIcon(packageManager);
             imageView.setImageDrawable(drawable);
             TextView shareText = holder.itemView.findViewById(R.id.share_text);
