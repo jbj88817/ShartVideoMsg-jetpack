@@ -18,16 +18,24 @@
       "title": "Sofa"
     },
     {
-      "size": 24,
+      "size": 40,
       "enable": true,
       "index": 2,
+      "tintColor": "#ff678f",
+      "pageUrl": "main/tabs/publish",
+      "title": ""
+    },
+    {
+      "size": 24,
+      "enable": true,
+      "index": 3,
       "pageUrl": "main/tabs/find",
       "title": "Find"
     },
     {
       "size": 24,
       "enable": true,
-      "index": 3,
+      "index": 4,
       "pageUrl": "main/tabs/my",
       "title": "Me"
     }

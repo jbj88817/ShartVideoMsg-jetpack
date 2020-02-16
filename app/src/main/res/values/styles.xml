@@ -36,4 +36,9 @@
         <item name="android:elevation">0dp</item>
     </style>
 
+    <style name="capture" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
 </resources>

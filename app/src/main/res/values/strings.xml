@@ -18,4 +18,5 @@
     <string name="comment_hint">Yuppp!</string>
     <string name="comment_send">Send</string>
     <string name="comment_failed">Comment failed</string>
+    <string name="capture_tips">Tap for pic, long for video</string>
 </resources>
