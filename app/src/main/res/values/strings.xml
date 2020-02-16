@@ -19,4 +19,7 @@
     <string name="comment_send">Send</string>
     <string name="comment_failed">Comment failed</string>
     <string name="capture_tips">Tap for pic, long for video</string>
+    <string name="capture_permission_message">Need to grant permission</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
 </resources>

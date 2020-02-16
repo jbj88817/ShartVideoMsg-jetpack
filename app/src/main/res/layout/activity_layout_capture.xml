@@ -24,7 +24,7 @@
             android:textColor="@color/color_white" />
 
         <com.mooc.ppjoke.view.RecordView
-            android:id="@+id/recycler_view"
+            android:id="@+id/record_view"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
             android:layout_gravity="center_horizontal|bottom"
