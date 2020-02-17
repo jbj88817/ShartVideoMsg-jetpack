@@ -98,7 +98,7 @@ public class RecordView extends View implements View.OnClickListener, View.OnLon
                 progressValue = 0;
                 postInvalidate();
             }
-            return true;
+            return false;
         });
 
 
@@ -110,24 +110,23 @@ public class RecordView extends View implements View.OnClickListener, View.OnLon
         if (mListener != null) {
             mListener.onFinish();
         }
-
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         int width = getWidth();
-        int hight = getHeight();
+        int height = getHeight();
         if (isRecording) {
-            canvas.drawCircle(width / 2, hight / 2, width / 2, fillPaint);
-            int left = 0;
-            int top = 0;
-            int right = width;
-            int bottom = hight;
-            float sweepAngle = (progressValue / progressMaxValue) * 360;
+            canvas.drawCircle(width / 2, height / 2, width / 2, fillPaint);
+            int left = progressWidth / 2;
+            int top = progressWidth / 2;
+            int right = width - progressWidth / 2;
+            int bottom = height - progressWidth / 2;
+            float sweepAngle = (progressValue * 1.0f / progressMaxValue) * 360;
             canvas.drawArc(left, top, right, bottom, -90, sweepAngle, false, progressPaint);
         } else {
-            canvas.drawCircle(width / 2, hight / 2, radius / 2, fillPaint);
+            canvas.drawCircle(width / 2, height / 2, radius, fillPaint);
         }
     }
 

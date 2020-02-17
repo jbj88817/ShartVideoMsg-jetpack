@@ -12,6 +12,7 @@ import android.util.Rational;
 import android.util.Size;
 import android.view.Surface;
 import android.view.TextureView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.mooc.ppjoke.R;
@@ -41,7 +42,8 @@ public class CaptureActivity extends AppCompatActivity {
 
     private ActivityLayoutCaptureBinding mBinding;
     private static final String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO};
     private static final int PERMISSION_CODE = 1000;
     private ArrayList<String> deniedPermission = new ArrayList<>();
     private CameraX.LensFacing mLensFacing = CameraX.LensFacing.BACK;
@@ -77,11 +79,11 @@ public class CaptureActivity extends AppCompatActivity {
                 takingPicture = true;
                 File file = new File(Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_DOWNLOADS), System.currentTimeMillis() + ".jpeg");
+                mBinding.captureTips.setVisibility(View.INVISIBLE);
                 imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {
                     @Override
                     public void onImageSaved(@NonNull File file) {
                         onFileSaved(file);
-
                     }
 
                     @Override

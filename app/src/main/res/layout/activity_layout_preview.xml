@@ -16,19 +16,22 @@
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/player_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:visibility="gone"
             app:buffered_color="@color/color_theme"
             app:resize_mode="fixed_width"
             app:show_buffering="when_playing"
+            app:surface_type="texture_view"
             app:use_controller="false" />
 
         <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/photo_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/dp_60"
+            android:layout_gravity="center"
             android:layout_marginTop="@dimen/dp_90"
+            android:layout_marginBottom="@dimen/dp_60"
             android:scaleType="fitCenter"
             android:visibility="gone" />
 

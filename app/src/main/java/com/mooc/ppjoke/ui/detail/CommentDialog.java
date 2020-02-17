@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +25,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.arch.core.executor.ArchTaskExecutor;
-import androidx.fragment.app.DialogFragment;
 import us.bojie.libcommon.ViewHelper;
 import us.bojie.libcommon.dialog.LoadingDialog;
 import us.bojie.libcommon.utils.FileUploadManager;
@@ -37,7 +38,7 @@ import us.bojie.libnetwork.JsonCallback;
 
 import static us.bojie.libcommon.utils.ToastUtils.showToast;
 
-public class CommentDialog extends DialogFragment implements View.OnClickListener {
+public class CommentDialog extends AppCompatDialogFragment implements View.OnClickListener {
     private LayoutCommentDialogBinding mBinding;
     private long itemId;
     private CommentAddListener mListener;
@@ -64,7 +65,7 @@ public class CommentDialog extends DialogFragment implements View.OnClickListene
         Window window = getDialog().getWindow();
         window.setWindowAnimations(0);
 
-        mBinding = LayoutCommentDialogBinding.inflate(inflater, container, false);
+        mBinding = LayoutCommentDialogBinding.inflate(inflater, window.findViewById(android.R.id.content), false);
         mBinding.commentVideo.setOnClickListener(this);
         mBinding.commentDelete.setOnClickListener(this);
         mBinding.commentSend.setOnClickListener(this);
@@ -106,7 +107,7 @@ public class CommentDialog extends DialogFragment implements View.OnClickListene
             mBinding.commentExtLayout.setVisibility(View.GONE);
 
             mBinding.commentVideo.setEnabled(true);
-            mBinding.commentVideo.setImageAlpha(100);
+            mBinding.commentVideo.setImageAlpha(255);
         }
     }
 
@@ -128,7 +129,7 @@ public class CommentDialog extends DialogFragment implements View.OnClickListene
             }
 
             mBinding.commentVideo.setEnabled(false);
-            mBinding.commentVideo.setImageAlpha(50);
+            mBinding.commentVideo.setImageAlpha(80);
         }
     }
 
@@ -187,7 +188,7 @@ public class CommentDialog extends DialogFragment implements View.OnClickListene
                 .addParam("itemId", itemId)
                 .addParam("commentText", commentText)
                 .addParam("image_url", isVideo ? coverUrl : fileUrl)
-                .addParam("video_url", fileUrl)
+                .addParam("video_url", isVideo ? fileUrl : null)
                 .addParam("width", width)
                 .addParam("height", height)
                 .execute(new JsonCallback<Comment>() {
@@ -208,23 +209,50 @@ public class CommentDialog extends DialogFragment implements View.OnClickListene
     private void showLoadingDialog() {
         if (loadingDialog == null) {
             loadingDialog = new LoadingDialog(getContext());
+            loadingDialog.setLoadingText(getString(R.string.uploading));
+            loadingDialog.setCanceledOnTouchOutside(false);
+            loadingDialog.setCancelable(false);
         }
-
-        loadingDialog.setLoadingText(getString(R.string.uploading));
-        loadingDialog.show();
+        if (!loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
     }
 
     private void dismissLoadingDialog() {
         if (loadingDialog != null) {
-            loadingDialog.dismiss();
+            //dismissLoadingDialog  的调用可能会出现在异步线程调用
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                ArchTaskExecutor.getMainThreadExecutor().execute(() -> {
+                    if (loadingDialog != null && loadingDialog.isShowing()) {
+                        loadingDialog.dismiss();
+                    }
+                });
+            } else if (loadingDialog.isShowing()) {
+                loadingDialog.dismiss();
+            }
         }
     }
 
     private void onCommentSuccess(Comment body) {
         showToast("Comment succeed");
-        if (mListener != null) {
-            mListener.onAddComment(body);
-        }
+        ArchTaskExecutor.getMainThreadExecutor().execute(() -> {
+            if (mListener != null) {
+                mListener.onAddComment(body);
+            }
+            dismiss();
+        });
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        dismissLoadingDialog();
+        filePath = null;
+        fileUrl = null;
+        coverUrl = null;
+        isVideo = false;
+        width = 0;
+        height = 0;
     }
 
     public interface CommentAddListener {
@@ -234,5 +262,4 @@ public class CommentDialog extends DialogFragment implements View.OnClickListene
     public void setCommentAddListener(CommentAddListener listener) {
         mListener = listener;
     }
-
 }
