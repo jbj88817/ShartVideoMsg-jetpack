@@ -5,12 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.paging.ItemKeyedDataSource;
-import androidx.paging.PagedList;
-import androidx.paging.PagedListAdapter;
-
 import com.mooc.ppjoke.exoplayer.PageListPlayDetector;
 import com.mooc.ppjoke.model.Feed;
 import com.mooc.ppjoke.ui.AbsListFragment;
@@ -19,6 +13,11 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.paging.ItemKeyedDataSource;
+import androidx.paging.PagedList;
+import androidx.paging.PagedListAdapter;
 import us.bojie.libnavannotation.FragmentDestination;
 
 @FragmentDestination(pageUrl = "main/tabs/home", asStarter = true)
@@ -26,6 +25,7 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
     private static final String TAG = "HomeFragment";
     private PageListPlayDetector playDetector;
     private String feedType;
+    private boolean shouldPause = true;
 
     public static HomeFragment newInstance(String feedType) {
         Bundle args = new Bundle();
@@ -60,6 +60,12 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
             public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
                 super.onViewDetachedFromWindow(holder);
                 playDetector.removeTarget(holder.getListPlayerView());
+            }
+
+            @Override
+            public void onStartFeedDetailActivity(Feed feed) {
+                boolean isVideo = feed.getItemType() == Feed.TYPE_VIDEO;
+                shouldPause = !isVideo;
             }
         };
     }
@@ -99,7 +105,9 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
 
     @Override
     public void onPause() {
-        playDetector.onPause();
+        if (shouldPause) {
+            playDetector.onPause();
+        }
         Log.e(TAG, "onPause: feedtype" + feedType);
         super.onPause();
     }

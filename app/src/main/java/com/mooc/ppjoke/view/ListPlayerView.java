@@ -30,11 +30,11 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget,
         PlayerControlView.VisibilityListener, Player.EventListener {
 
     private View bufferView;
-    private PPImageView cover;
+    protected PPImageView cover;
     private PPImageView blur;
     private ImageView playBtn;
-    private String mCategroy;
-    private String mVideoUrl;
+    protected String mCategroy;
+    protected String mVideoUrl;
     private boolean isPlaying;
 
     public ListPlayerView(@NonNull Context context) {
