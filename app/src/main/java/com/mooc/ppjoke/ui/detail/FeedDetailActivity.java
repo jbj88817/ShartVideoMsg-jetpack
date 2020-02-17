@@ -6,12 +6,14 @@ import android.os.Bundle;
 
 import com.mooc.ppjoke.model.Feed;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class FeedDetailActivity extends AppCompatActivity {
 
     public static final String KEY_FEED = "key_feed";
     public static final String KEY_CATEGORY = "key_category";
+    private ViewHandler viewHandler;
 
     public static void startFeedDetailActivity(Context context, Feed item, String category) {
         Intent intent = new Intent(context, FeedDetailActivity.class);
@@ -30,7 +32,6 @@ public class FeedDetailActivity extends AppCompatActivity {
             return;
         }
 
-        ViewHandler viewHandler = null;
         if (feed.getItemType() == Feed.TYPE_IMAGE) {
             viewHandler = new ImageViewHandler(this);
         } else {
@@ -38,5 +39,13 @@ public class FeedDetailActivity extends AppCompatActivity {
         }
 
         viewHandler.bindInitData(feed);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (viewHandler != null) {
+            viewHandler.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

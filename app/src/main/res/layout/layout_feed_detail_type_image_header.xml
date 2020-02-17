@@ -8,7 +8,7 @@
             name="feed"
             type="com.mooc.ppjoke.model.Feed" />
 
-        <import type="us.bojie.libcommon.PixUtils" />
+        <import type="us.bojie.libcommon.utils.PixUtils" />
     </data>
 
     <LinearLayout

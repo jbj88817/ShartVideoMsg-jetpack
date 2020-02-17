@@ -18,7 +18,7 @@ import com.mooc.ppjoke.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import us.bojie.libcommon.PixUtils;
+import us.bojie.libcommon.utils.PixUtils;
 
 public class RecordView extends View implements View.OnClickListener, View.OnLongClickListener {
     private static final int PROGRESS_INTERVAL = 100;

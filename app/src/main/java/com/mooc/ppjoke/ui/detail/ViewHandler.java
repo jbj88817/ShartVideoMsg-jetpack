@@ -1,5 +1,6 @@
 package com.mooc.ppjoke.ui.detail;
 
+import android.content.Intent;
 import android.view.ViewGroup;
 
 import com.mooc.ppjoke.R;
@@ -87,6 +88,12 @@ public abstract class ViewHandler {
                 mEmptyView.setTitle(mActivity.getString(R.string.feed_comment_empty));
                 listAdapter.addHeaderView(mEmptyView);
             }
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (mCommentDialog != null && mCommentDialog.isAdded()) {
+            mCommentDialog.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

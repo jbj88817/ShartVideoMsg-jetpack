@@ -24,7 +24,7 @@ import com.mooc.ppjoke.exoplayer.PageListPlayManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import us.bojie.libcommon.PixUtils;
+import us.bojie.libcommon.utils.PixUtils;
 
 public class ListPlayerView extends FrameLayout implements IPlayTarget,
         PlayerControlView.VisibilityListener, Player.EventListener {

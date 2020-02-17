@@ -2,7 +2,7 @@ package com.mooc.ppjoke.ui.publish;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaScannerConnection;
@@ -58,6 +58,13 @@ public class CaptureActivity extends AppCompatActivity {
     public static final String RESULT_FILE_WIDTH = "file_width";
     public static final String RESULT_FILE_HEIGHT = "file_height";
     public static final String RESULT_FILE_TYPE = "file_type";
+
+    public static final int REQ_CAPTURE = 10001;
+
+    public static void startActivityForResult(Activity activity) {
+        Intent intent = new Intent(activity, CaptureActivity.class);
+        activity.startActivityForResult(intent, REQ_CAPTURE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,12 +159,9 @@ public class CaptureActivity extends AppCompatActivity {
             } else {
                 new AlertDialog.Builder(this)
                         .setMessage(getString(R.string.capture_permission_message))
-                        .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                CaptureActivity.this.finish();
-                            }
+                        .setNegativeButton(getString(R.string.no), (dialog, which) -> {
+                            dialog.dismiss();
+                            CaptureActivity.this.finish();
                         })
                         .setPositiveButton(getString(R.string.ok), (dialog, which) -> {
                             String[] denied = new String[deniedPermission.size()];

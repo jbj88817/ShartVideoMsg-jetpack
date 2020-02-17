@@ -29,7 +29,7 @@ import com.mooc.ppjoke.view.PPImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import us.bojie.libcommon.PixUtils;
+import us.bojie.libcommon.utils.PixUtils;
 import us.bojie.libcommon.RoundFrameLayout;
 import us.bojie.libcommon.ViewHelper;
 

@@ -18,7 +18,7 @@ import androidx.paging.ItemKeyedDataSource;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
-import us.bojie.libcommon.PixUtils;
+import us.bojie.libcommon.utils.PixUtils;
 import us.bojie.libcommon.extention.AbsPagedListAdapter;
 
 public class FeedCommentAdapter extends AbsPagedListAdapter<Comment, FeedCommentAdapter.ViewHolder> {

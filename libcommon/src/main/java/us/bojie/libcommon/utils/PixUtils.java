@@ -1,6 +1,8 @@
-package us.bojie.libcommon;
+package us.bojie.libcommon.utils;
 
 import android.util.DisplayMetrics;
+
+import us.bojie.libcommon.AppGlobals;
 
 public class PixUtils {
     public static int dp2px(int dpValue) {

@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.databinding.BindingAdapter;
 import jp.wasabeef.glide.transformations.BlurTransformation;
-import us.bojie.libcommon.PixUtils;
+import us.bojie.libcommon.utils.PixUtils;
 
 public class PPImageView extends AppCompatImageView {
     public PPImageView(Context context) {
@@ -31,6 +31,10 @@ public class PPImageView extends AppCompatImageView {
 
     public PPImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    public void setImageUrl(String imageUrl) {
+        setImageUrl(this, imageUrl, false);
     }
 
     @BindingAdapter(value = {"image_url", "isCircle"}, requireAll = false)
