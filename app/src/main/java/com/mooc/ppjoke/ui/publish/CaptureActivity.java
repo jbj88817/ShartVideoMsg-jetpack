@@ -3,6 +3,7 @@ package com.mooc.ppjoke.ui.publish;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
@@ -53,6 +54,11 @@ public class CaptureActivity extends AppCompatActivity {
     private boolean takingPicture;
     private String outputFilePath;
 
+    public static final String RESULT_FILE_PATH = "file_path";
+    public static final String RESULT_FILE_WIDTH = "file_width";
+    public static final String RESULT_FILE_HEIGHT = "file_height";
+    public static final String RESULT_FILE_TYPE = "file_type";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,11 +104,26 @@ public class CaptureActivity extends AppCompatActivity {
 
             }
 
+            @SuppressLint("RestrictedApi")
             @Override
             public void onFinish() {
-
+                videoCapture.stopRecording();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PreviewActivity.REQ_PREVIEW && resultCode == RESULT_OK) {
+            Intent intent = new Intent();
+            intent.putExtra(RESULT_FILE_PATH, outputFilePath);
+            intent.putExtra(RESULT_FILE_WIDTH, resolution.getHeight());
+            intent.putExtra(RESULT_FILE_HEIGHT, resolution.getWidth());
+            intent.putExtra(RESULT_FILE_TYPE, !takingPicture);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
     private void onFileSaved(File file) {
@@ -110,8 +131,7 @@ public class CaptureActivity extends AppCompatActivity {
         String mimeType = takingPicture ? "image/jpeg" : "video/mp4";
         MediaScannerConnection.scanFile(this, new String[]{outputFilePath},
                 new String[]{mimeType}, null);
-        
-
+        PreviewActivity.startActivityForResult(this, outputFilePath, !takingPicture, getString(R.string.done));
     }
 
     @Override

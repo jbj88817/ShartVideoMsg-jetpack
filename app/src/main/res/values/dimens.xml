@@ -14,4 +14,5 @@
     <dimen name="dp_200">200dp</dimen>
     <dimen name="dp_11">11dp</dimen>
     <dimen name="dp_100">100dp</dimen>
+    <dimen name="dp_90">90dp</dimen>
 </resources>
