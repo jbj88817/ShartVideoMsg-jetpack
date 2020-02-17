@@ -20,10 +20,15 @@ import com.mooc.ppjoke.model.Comment;
 import com.mooc.ppjoke.ui.login.UserManager;
 import com.mooc.ppjoke.ui.publish.CaptureActivity;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.arch.core.executor.ArchTaskExecutor;
 import androidx.fragment.app.DialogFragment;
 import us.bojie.libcommon.ViewHelper;
+import us.bojie.libcommon.dialog.LoadingDialog;
+import us.bojie.libcommon.utils.FileUploadManager;
 import us.bojie.libcommon.utils.FileUtils;
 import us.bojie.libcommon.utils.PixUtils;
 import us.bojie.libnetwork.ApiResponse;
@@ -41,6 +46,9 @@ public class CommentDialog extends DialogFragment implements View.OnClickListene
     private int width;
     private int height;
     private boolean isVideo;
+    private LoadingDialog loadingDialog;
+    private String fileUrl;
+    private String coverUrl;
 
     public static CommentDialog newInstance(long itemId) {
         Bundle args = new Bundle();
@@ -125,41 +133,91 @@ public class CommentDialog extends DialogFragment implements View.OnClickListene
     }
 
     private void publishComment() {
-
-        String commentText = mBinding.inputView.getText().toString();
-        if (TextUtils.isEmpty(commentText)) {
+        if (TextUtils.isEmpty(mBinding.inputView.getText())) {
             return;
         }
 
         if (isVideo && !TextUtils.isEmpty(filePath)) {
             FileUtils.generateVideoCover(filePath).observe(this, coverPath ->
                     uploadFile(coverPath, filePath));
+        } else if (!TextUtils.isEmpty(filePath)) {
+            uploadFile(null, filePath);
+        } else {
+            publish();
         }
+    }
 
+    private void uploadFile(String coverPath, @NonNull String filePath) {
+        showLoadingDialog();
+        AtomicInteger count = new AtomicInteger(1);
+        if (!TextUtils.isEmpty(coverPath)) {
+            count.set(2);
+            ArchTaskExecutor.getIOThreadExecutor().execute(() -> {
+                int remain = count.decrementAndGet();
+                coverUrl = FileUploadManager.upload(coverPath);
+                if (remain <= 0) {
+                    if (!TextUtils.isEmpty(fileUrl) && !TextUtils.isEmpty(coverUrl)) {
+                        publish();
+                    } else {
+                        dismissLoadingDialog();
+                        showToast(getString(R.string.file_upload_failed));
+                    }
+                }
+            });
+        }
+        ArchTaskExecutor.getIOThreadExecutor().execute(() -> {
+            int remain = count.decrementAndGet();
+            fileUrl = FileUploadManager.upload(filePath);
+            if (remain <= 0) {
+                if (!TextUtils.isEmpty(fileUrl) || !TextUtils.isEmpty(coverPath) && !TextUtils.isEmpty(coverUrl)) {
+                    publish();
+                } else {
+                    dismissLoadingDialog();
+                    showToast(getString(R.string.file_upload_failed));
+                }
+            }
+        });
+    }
+
+    private void publish() {
+
+        String commentText = mBinding.inputView.getText().toString();
         ApiService.post("/comment/addComment")
                 .addParam("userId", UserManager.get().getUserId())
                 .addParam("itemId", itemId)
                 .addParam("commentText", commentText)
-                .addParam("image_url", null)
-                .addParam("video_url", null)
-                .addParam("width", 0)
-                .addParam("height", 0)
+                .addParam("image_url", isVideo ? coverUrl : fileUrl)
+                .addParam("video_url", fileUrl)
+                .addParam("width", width)
+                .addParam("height", height)
                 .execute(new JsonCallback<Comment>() {
                     @Override
                     public void onSuccess(ApiResponse<Comment> response) {
                         onCommentSuccess(response.body);
+                        dismissLoadingDialog();
                     }
 
                     @Override
                     public void onError(ApiResponse response) {
                         showToast(getString(R.string.comment_failed));
+                        dismissLoadingDialog();
                     }
                 });
-
     }
 
-    private void uploadFile(String coverPath, String filePath) {
+    private void showLoadingDialog() {
+        if (loadingDialog == null) {
+            loadingDialog = new LoadingDialog(getContext());
+        }
 
+        loadingDialog.setLoadingText(getString(R.string.uploading));
+        loadingDialog.show();
+    }
+
+    private void dismissLoadingDialog() {
+        if (loadingDialog != null) {
+            loadingDialog.dismiss();
+        }
     }
 
     private void onCommentSuccess(Comment body) {

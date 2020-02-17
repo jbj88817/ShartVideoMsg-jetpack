@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">libcommon</string>
     <string name="empty_view_refresh">Nothing here, please refresh</string>
+    <string name="uploading">Uploading</string>
 </resources>

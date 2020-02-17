@@ -67,5 +67,8 @@ dependencies {
 
     api 'com.github.chrisbanes:PhotoView:2.3.0@aar'
 
+    //aliyun oss
+    api 'com.aliyun.dpa:oss-android-sdk:+'
+
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }

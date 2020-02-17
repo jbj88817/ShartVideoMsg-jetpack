@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class Comment implements Serializable {
 
+    public static final int COMMENT_TYPE_VIDEO = 3;
+
     /**
      * id : 784
      * itemId : 6739143063064549000
