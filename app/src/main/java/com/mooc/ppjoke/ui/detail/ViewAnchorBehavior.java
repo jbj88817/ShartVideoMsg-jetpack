@@ -27,6 +27,11 @@ public class ViewAnchorBehavior extends CoordinatorLayout.Behavior<View> {
         extraUsed = PixUtils.dp2px(48);
     }
 
+    public ViewAnchorBehavior(int anchorId) {
+        this.anchorId = anchorId;
+        extraUsed = PixUtils.dp2px(48);
+    }
+
     @Override
     public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
         return anchorId == dependency.getId();

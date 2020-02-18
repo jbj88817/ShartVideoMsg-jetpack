@@ -48,4 +48,28 @@ public class FeedDetailActivity extends AppCompatActivity {
             viewHandler.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (viewHandler != null) {
+            viewHandler.onPause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (viewHandler != null) {
+            viewHandler.onResume();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (viewHandler != null) {
+            viewHandler.onBackPressed();
+        }
+        super.onBackPressed();
+    }
 }

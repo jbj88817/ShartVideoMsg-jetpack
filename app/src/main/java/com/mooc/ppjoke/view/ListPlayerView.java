@@ -33,7 +33,7 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget,
     protected PPImageView cover;
     private PPImageView blur;
     private ImageView playBtn;
-    protected String mCategroy;
+    protected String mCategory;
     protected String mVideoUrl;
     private boolean isPlaying;
 
@@ -64,13 +64,13 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget,
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        PageListPlay pageListPlay = PageListPlayManager.get(mCategroy);
+        PageListPlay pageListPlay = PageListPlayManager.get(mCategory);
         pageListPlay.controlView.show();
         return true;
     }
 
     public void bindData(String category, int widthPx, int heightPx, String coverUrl, String videoUrl) {
-        mCategroy = category;
+        mCategory = category;
         mVideoUrl = videoUrl;
 
         cover.setImageUrl(cover, coverUrl, false);
@@ -129,7 +129,7 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget,
 
     @Override
     public void onActive() {
-        PageListPlay pageListPlay = PageListPlayManager.get(mCategroy);
+        PageListPlay pageListPlay = PageListPlayManager.get(mCategory);
         PlayerView playerView = pageListPlay.playerView;
         PlayerControlView controlView = pageListPlay.controlView;
         SimpleExoPlayer exoPlayer = pageListPlay.mExoPlayer;
@@ -186,7 +186,7 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget,
 
     @Override
     public void inActive() {
-        PageListPlay pageListPlay = PageListPlayManager.get(mCategroy);
+        PageListPlay pageListPlay = PageListPlayManager.get(mCategory);
         pageListPlay.mExoPlayer.setPlayWhenReady(false);
         playBtn.setVisibility(VISIBLE);
         playBtn.setImageResource(R.drawable.icon_video_play);
@@ -205,7 +205,7 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget,
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        PageListPlay pageListPlay = PageListPlayManager.get(mCategroy);
+        PageListPlay pageListPlay = PageListPlayManager.get(mCategory);
         SimpleExoPlayer exoPlayer = pageListPlay.mExoPlayer;
 
         if (playbackState == Player.STATE_READY && exoPlayer.getBufferedPosition() != 0) {
@@ -218,5 +218,10 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget,
         isPlaying = playbackState == Player.STATE_READY && exoPlayer.getBufferedPosition() != 0 && playWhenReady;
         playBtn.setImageResource(isPlaying ? R.drawable.icon_video_pause : R.drawable.icon_video_play);
 
+    }
+
+    public View getPlayController() {
+        PageListPlay listPlay = PageListPlayManager.get(mCategory);
+        return listPlay.controlView;
     }
 }

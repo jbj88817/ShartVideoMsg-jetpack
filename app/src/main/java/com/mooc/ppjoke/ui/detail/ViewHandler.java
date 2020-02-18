@@ -96,4 +96,16 @@ public abstract class ViewHandler {
             mCommentDialog.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    public void onPause() {
+
+    }
+
+    public void onResume() {
+
+    }
+
+    public void onBackPressed() {
+
+    }
 }

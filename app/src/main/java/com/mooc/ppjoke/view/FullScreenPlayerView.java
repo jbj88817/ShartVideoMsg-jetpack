@@ -63,7 +63,7 @@ public class FullScreenPlayerView extends ListPlayerView {
 
     @Override
     public void onActive() {
-        PageListPlay pageListPlay = PageListPlayManager.get(mCategroy);
+        PageListPlay pageListPlay = PageListPlayManager.get(mCategory);
         PlayerView playerView = exoPlayerView; //pageListPlay.playerView;
         PlayerControlView controlView = pageListPlay.controlView;
         SimpleExoPlayer exoPlayer = pageListPlay.mExoPlayer;
@@ -110,7 +110,7 @@ public class FullScreenPlayerView extends ListPlayerView {
     @Override
     public void inActive() {
         super.inActive();
-        PageListPlay pageListPlay = PageListPlayManager.get(mCategroy);
+        PageListPlay pageListPlay = PageListPlayManager.get(mCategory);
         pageListPlay.switchPlayerView(exoPlayerView, false);
     }
 }
