@@ -51,7 +51,7 @@ public class ViewZoomBehavior extends CoordinatorLayout.Behavior<FullScreenPlaye
             scrollingView = parent.findViewById(scrollingId);
             refChild = child;
             childOriginalHeight = child.getMeasuredHeight();
-            canFullscreen = childOriginalHeight > parent.getMeasuredHeight();
+            canFullscreen = childOriginalHeight > parent.getMeasuredWidth();
         }
 
         return super.onLayoutChild(parent, child, layoutDirection);
@@ -62,10 +62,9 @@ public class ViewZoomBehavior extends CoordinatorLayout.Behavior<FullScreenPlaye
         //告诉ViewDragHelper 什么时候 可以拦截 手指触摸的这个View的手势分发
         @Override
         public boolean tryCaptureView(@NonNull View child, int pointerId) {
-            if (canFullscreen && refChild.getBottom() >= minHeight) {
-                return true;
-            }
-            return false;
+            return canFullscreen
+                    && refChild.getBottom() >= minHeight
+                    && refChild.getBottom() <= childOriginalHeight;
         }
 
         //告诉ViewDragHelper 在屏幕上滑动多少距离才算是拖拽

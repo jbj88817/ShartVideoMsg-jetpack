@@ -35,6 +35,8 @@ public class VideoViewHandler extends ViewHandler {
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) authorInfoView.getLayoutParams();
         params.setBehavior(new ViewAnchorBehavior(R.id.player_view));
 
+        mBinding.actionClose.setOnClickListener(v -> mActivity.finish());
+
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) playerView.getLayoutParams();
         ViewZoomBehavior behavior = (ViewZoomBehavior) layoutParams.getBehavior();
         behavior.setViewZoomCallback(height -> {
@@ -69,6 +71,7 @@ public class VideoViewHandler extends ViewHandler {
 
     private void setViewAppearance(boolean fullscreen) {
         mBinding.setFullscreen(fullscreen);
+        mInteractionBinding.setFullscreen(fullscreen);
         mBinding.fullscreenAuthorInfo.getRoot().setVisibility(fullscreen ? View.VISIBLE : View.GONE);
 
         int inputHeight = mInteractionBinding.getRoot().getMeasuredHeight();
@@ -76,6 +79,7 @@ public class VideoViewHandler extends ViewHandler {
         int bottom = mBinding.playerView.getPlayController().getBottom();
         mBinding.playerView.getPlayController()
                 .setY(fullscreen ? bottom - inputHeight - ctrlViewHeight : bottom - ctrlViewHeight);
+        mInteractionBinding.inputView.setBackgroundResource(fullscreen ? R.drawable.bg_edit_view2 : R.drawable.bg_edit_view);
     }
 
     @Override
@@ -87,6 +91,7 @@ public class VideoViewHandler extends ViewHandler {
 
     @Override
     public void onPause() {
+        super.onPause();
         if (!backPressed) {
             mBinding.playerView.inActive();
         }
@@ -94,6 +99,7 @@ public class VideoViewHandler extends ViewHandler {
 
     @Override
     public void onResume() {
+        super.onResume();
         backPressed = false;
         mBinding.playerView.onActive();
     }

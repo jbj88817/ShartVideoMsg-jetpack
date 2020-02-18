@@ -85,6 +85,21 @@ public class FeedCommentAdapter extends AbsPagedListAdapter<Comment, FeedComment
 
     }
 
+    public void addAndRefreshList(Comment comment) {
+        PagedList<Comment> currentList = getCurrentList();
+        MutableItemKeyedDataSource<Integer, Comment> mutableItemKeyedDataSource = new MutableItemKeyedDataSource<Integer, Comment>((ItemKeyedDataSource) currentList.getDataSource()) {
+            @NonNull
+            @Override
+            public Integer getKey(@NonNull Comment item) {
+                return item.getId();
+            }
+        };
+        mutableItemKeyedDataSource.data.add(comment);
+        mutableItemKeyedDataSource.data.addAll(currentList);
+        PagedList<Comment> pagedList = mutableItemKeyedDataSource.buildNewPagedList(currentList.getConfig());
+        submitList(pagedList);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LayoutFeedCommentListItemBinding mBinding;
 

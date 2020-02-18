@@ -26,6 +26,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
+        android:layout_gravity="bottom"
         android:background="@{fullscreen?@color/transparent:@color/color_white}"
         android:orientation="vertical">
 

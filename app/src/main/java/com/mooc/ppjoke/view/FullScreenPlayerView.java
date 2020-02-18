@@ -73,7 +73,7 @@ public class FullScreenPlayerView extends ListPlayerView {
 
             if (exoPlayerView != null) {
                 ViewGroup.LayoutParams layoutParams = exoPlayerView.getLayoutParams();
-                if (layoutParams != null) {
+                if (layoutParams != null && layoutParams.width > 0 && layoutParams.height > 0) {
                     float scalex = coverLayoutParams.width * 1.0f / layoutParams.width;
                     float scaley = coverLayoutParams.height * 1.0f / layoutParams.height;
                     exoPlayerView.setScaleX(scalex);
