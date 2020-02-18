@@ -26,7 +26,10 @@
         <com.mooc.ppjoke.view.FullScreenPlayerView
             android:id="@+id/player_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:layout_behavior=".ui.detail.ViewZoomBehavior"
+            app:min_height="@dimen/dp_200"
+            app:scrolling_id="@+id/recycler_view" />
 
         <include
             android:id="@+id/author_info"

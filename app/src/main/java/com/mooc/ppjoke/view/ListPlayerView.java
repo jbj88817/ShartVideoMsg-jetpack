@@ -34,6 +34,8 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget,
     private PPImageView blur;
     private ImageView playBtn;
     protected String mCategory;
+    protected int mWidthPx;
+    protected int mHeightPx;
     protected String mVideoUrl;
     private boolean isPlaying;
 
@@ -71,9 +73,11 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget,
 
     public void bindData(String category, int widthPx, int heightPx, String coverUrl, String videoUrl) {
         mCategory = category;
+        mWidthPx = widthPx;
+        mHeightPx = heightPx;
         mVideoUrl = videoUrl;
+        cover.setImageUrl(coverUrl);
 
-        cover.setImageUrl(cover, coverUrl, false);
         if (widthPx < heightPx) {
             blur.setBlurImageUrl(coverUrl, 50);
             blur.setVisibility(VISIBLE);

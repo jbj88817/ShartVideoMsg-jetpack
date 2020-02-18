@@ -7,6 +7,7 @@ import com.mooc.ppjoke.R;
 import com.mooc.ppjoke.databinding.LayoutFeedDetailTypeVideoBinding;
 import com.mooc.ppjoke.databinding.LayoutFeedDetailTypeVideoHeaderBinding;
 import com.mooc.ppjoke.model.Feed;
+import com.mooc.ppjoke.view.FullScreenPlayerView;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
@@ -15,6 +16,8 @@ import androidx.fragment.app.FragmentActivity;
 public class VideoViewHandler extends ViewHandler {
 
     private final LayoutFeedDetailTypeVideoBinding mBinding;
+    private final CoordinatorLayout mCoordinator;
+    private FullScreenPlayerView playerView;
     private String category;
     private boolean backPressed;
 
@@ -24,10 +27,25 @@ public class VideoViewHandler extends ViewHandler {
         mBinding = DataBindingUtil.setContentView(activity, R.layout.layout_feed_detail_type_video);
         mInteractionBinding = mBinding.bottomInteraction;
         mRecyclerView = mBinding.recyclerView;
+        playerView = mBinding.playerView;
+        mCoordinator = mBinding.coordinator;
+
 
         View authorInfoView = mBinding.authorInfo.getRoot();
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) authorInfoView.getLayoutParams();
         params.setBehavior(new ViewAnchorBehavior(R.id.player_view));
+
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) playerView.getLayoutParams();
+        ViewZoomBehavior behavior = (ViewZoomBehavior) layoutParams.getBehavior();
+        behavior.setViewZoomCallback(height -> {
+            int bottom = playerView.getBottom();
+            boolean moveUp = height < bottom;
+            boolean fullscreen = moveUp ?
+                    height >= mCoordinator.getBottom() - mInteractionBinding.getRoot().getHeight()
+                    : height >= mCoordinator.getBottom();
+            setViewAppearance(fullscreen);
+        });
+
     }
 
     @Override
