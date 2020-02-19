@@ -27,4 +27,8 @@
     <string name="publish_title">Post</string>
     <string name="publish_hint">Say Something</string>
     <string name="add_tag">Add Tag</string>
+    <string name="publish_exit_message">Content not being saved</string>
+    <string name="cancel">Cancel</string>
+    <string name="exit">Exit</string>
+    <string name="tag_title">Choose tag</string>
 </resources>
