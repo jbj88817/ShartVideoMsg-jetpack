@@ -24,4 +24,7 @@
     <string name="ok">OK</string>
     <string name="done">Done</string>
     <string name="file_upload_failed">Upload failed</string>
+    <string name="publish_title">Post</string>
+    <string name="publish_hint">Say Something</string>
+    <string name="add_tag">Add Tag</string>
 </resources>
