@@ -8,10 +8,22 @@ import android.view.View;
 import com.mooc.ppjoke.R;
 import com.mooc.ppjoke.databinding.ActivityLayoutPublishBinding;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkContinuation;
+import androidx.work.WorkManager;
+import us.bojie.libcommon.utils.FileUtils;
 import us.bojie.libnavannotation.ActivityDestination;
 
 @ActivityDestination(pageUrl = "main/tabs/publish", needLogin = true)
@@ -22,7 +34,9 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     private int height;
     private String filePath;
     private boolean isVideo;
-
+    private String mCoverPath;
+    private UUID coverUUID;
+    private UUID fileUploadUUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +57,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 showExitDialog();
                 break;
             case R.id.action_publish:
+                publish();
                 break;
             case R.id.action_add_tag:
                 TagBottomSheetDialogFragment fragment = new TagBottomSheetDialogFragment();
@@ -62,6 +77,54 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 isVideo = false;
                 break;
         }
+    }
+
+    private void publish() {
+        List<OneTimeWorkRequest> workRequests = new ArrayList<>();
+        if (!TextUtils.isEmpty(filePath)) {
+            if (isVideo) {
+                FileUtils.generateVideoCover(filePath).observe(this, new Observer<String>() {
+                    @Override
+                    public void onChanged(String coverPath) {
+                        mCoverPath = coverPath;
+                        OneTimeWorkRequest request = getOneTimeWorkRequest(coverPath);
+                        workRequests.add(request);
+
+                        enqueue(workRequests);
+                    }
+                });
+            }
+
+            OneTimeWorkRequest request = getOneTimeWorkRequest(filePath);
+            fileUploadUUID = request.getId();
+            workRequests.add(request);
+            if (!isVideo) {
+                enqueue(workRequests);
+            }
+        }
+    }
+
+    private void enqueue(List<OneTimeWorkRequest> workRequests) {
+        WorkContinuation workContinuation = WorkManager.getInstance(PublishActivity.this).beginWith(workRequests);
+        workContinuation.enqueue();
+
+        workContinuation.getWorkInfosLiveData().observe(PublishActivity.this, workInfos -> {
+
+        });
+    }
+
+    @NotNull
+    private OneTimeWorkRequest getOneTimeWorkRequest(String filePath) {
+        Data inputData = new Data.Builder()
+                .putString("file", filePath)
+                .build();
+
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(UploadfileWorker.class)
+                .setInputData(inputData)
+                .build();
+
+        coverUUID = request.getId();
+        return request;
     }
 
     @Override

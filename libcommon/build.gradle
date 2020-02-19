@@ -70,5 +70,8 @@ dependencies {
     //aliyun oss
     api 'com.aliyun.dpa:oss-android-sdk:+'
 
+    //workmanager
+    api 'androidx.work:work-runtime:2.3.1'
+
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }
