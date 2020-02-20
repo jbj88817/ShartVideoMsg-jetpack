@@ -37,4 +37,6 @@
     <string name="posting">Posting</string>
     <string name="publish">Publish</string>
     <string name="hot_feed">hot feed</string>
+    <string name="no_data">No data</string>
+    <string name="go_to_discover">Go to discover</string>
 </resources>

@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.executor.ArchTaskExecutor;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.ItemKeyedDataSource;
 import us.bojie.libnetwork.ApiResponse;
 import us.bojie.libnetwork.ApiService;
@@ -19,10 +20,15 @@ public class TagListViewModel extends AbsViewModel<TagList> {
     private String tagType;
     private int offset;
     private AtomicBoolean loadAfter = new AtomicBoolean();
+    private MutableLiveData switchTabLiveData = new MutableLiveData();
 
     @Override
     protected DataSource createDataSource() {
         return new DataSource();
+    }
+
+    public MutableLiveData getSwitchTabLiveData() {
+        return switchTabLiveData;
     }
 
     public void setTagType(String tagType) {
