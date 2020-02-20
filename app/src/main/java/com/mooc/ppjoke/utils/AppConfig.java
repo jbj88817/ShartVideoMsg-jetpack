@@ -22,7 +22,7 @@ public class AppConfig {
     private static HashMap<String, Destination> sDestConfig;
 
     private static BottomBar sBottomBar;
-    private static SofaTab sSofaTab;
+    private static SofaTab sSofaTab, sFindTabConfig;
 
     public static HashMap<String, Destination> getDestConfig() {
         if (sDestConfig == null) {
@@ -49,6 +49,15 @@ public class AppConfig {
             Collections.sort(sSofaTab.tabs, (o1, o2) -> o1.index < o2.index ? -1 : 1);
         }
         return sSofaTab;
+    }
+
+    public static SofaTab getsFindTab() {
+        if (sFindTabConfig == null) {
+            String content = parseFile("find_tabs_config.json");
+            sFindTabConfig = JSON.parseObject(content, SofaTab.class);
+            Collections.sort(sFindTabConfig.tabs, (o1, o2) -> o1.index < o2.index ? -1 : 1);
+        }
+        return sFindTabConfig;
     }
 
     private static String parseFile(String fileName) {
