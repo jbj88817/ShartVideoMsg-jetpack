@@ -6,9 +6,12 @@ import android.content.Context;
 import com.alibaba.fastjson.JSONObject;
 import com.mooc.ppjoke.model.Comment;
 import com.mooc.ppjoke.model.Feed;
+import com.mooc.ppjoke.model.TagList;
 import com.mooc.ppjoke.model.User;
 import com.mooc.ppjoke.ui.ShareDialog;
 import com.mooc.ppjoke.ui.login.UserManager;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
@@ -236,7 +239,7 @@ public class InteractionPresenter {
         ApiService.get("/comment/deleteComment")
                 .addParam("userId", UserManager.get().getUserId())
                 .addParam("commentId", commentId)
-                .addParam("itemId",itemId)
+                .addParam("itemId", itemId)
                 .execute(new JsonCallback<JSONObject>() {
                     @Override
                     public void onSuccess(ApiResponse<JSONObject> response) {
@@ -254,5 +257,59 @@ public class InteractionPresenter {
                 });
     }
 
+    public static void toggleTagLike(LifecycleOwner owner, TagList tagList) {
+        if (!isLogin(owner, user -> toggleTagLikeInternal(tagList))) {
+            return;
+        }
+
+        toggleTagLikeInternal(tagList);
+    }
+
+    private static void toggleTagLikeInternal(TagList tagList) {
+        ApiService.get("/tag/toggleTagFollow")
+                .addParam("tagId", tagList.tagId)
+                .addParam("userId", UserManager.get().getUserId())
+                .execute(new JsonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(ApiResponse<JSONObject> response) {
+                        if (response.body != null) {
+                            Boolean follow = response.body.getBoolean("hasFollow");
+                            tagList.setHasFollow(follow);
+                        }
+                    }
+
+                    @Override
+                    public void onError(ApiResponse<JSONObject> response) {
+                        showToast(response.message);
+                    }
+                });
+    }
+
+    private static boolean isLogin(LifecycleOwner owner, Observer<User> observer) {
+        if (UserManager.get().isLogin()) {
+            return true;
+        } else {
+            LiveData<User> liveData = UserManager.get().login(AppGlobals.getApplication());
+            if (owner == null) {
+                liveData.observeForever(loginObserver(observer, liveData));
+            } else {
+                liveData.observe(owner, loginObserver(observer, liveData));
+            }
+            return false;
+        }
+    }
+
+    @NotNull
+    private static Observer<User> loginObserver(Observer<User> observer, LiveData<User> liveData) {
+        return new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                liveData.removeObserver(this);
+                if (user != null && observer != null) {
+                    observer.onChanged(user);
+                }
+            }
+        };
+    }
 
 }

@@ -13,11 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.paging.ItemKeyedDataSource;
 import androidx.paging.PagedList;
 import androidx.paging.PagedListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class TagListFragment extends AbsListFragment<TagList, TagListViewModel> {
 
     public static final String KEY_TAG_TYPE = "tag_type";
+    private String tagType;
 
     public static TagListFragment newInstance(String tagType) {
         Bundle args = new Bundle();
@@ -28,8 +28,10 @@ public class TagListFragment extends AbsListFragment<TagList, TagListViewModel> 
     }
 
     @Override
-    protected PagedListAdapter<TagList, RecyclerView.ViewHolder> getAdapter() {
-        return null;
+    protected PagedListAdapter getAdapter() {
+        tagType = getArguments().getString(KEY_TAG_TYPE);
+        mViewModel.setTagType(tagType);
+        return new TagListAdapter(getContext());
     }
 
     @Override

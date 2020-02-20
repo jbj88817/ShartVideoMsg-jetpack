@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.databinding.BindingAdapter;
 import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import us.bojie.libcommon.utils.PixUtils;
 
 public class PPImageView extends AppCompatImageView {
@@ -34,14 +35,16 @@ public class PPImageView extends AppCompatImageView {
     }
 
     public void setImageUrl(String imageUrl) {
-        setImageUrl(this, imageUrl, false);
+        setImageUrl(this, imageUrl, false, 0);
     }
 
-    @BindingAdapter(value = {"image_url", "isCircle"}, requireAll = false)
-    public static void setImageUrl(PPImageView view, String imageUrl, boolean isCircle) {
+    @BindingAdapter(value = {"image_url", "isCircle", "radius"}, requireAll = false)
+    public static void setImageUrl(PPImageView view, String imageUrl, boolean isCircle, int radius) {
         RequestBuilder<Drawable> builder = Glide.with(view).load(imageUrl);
         if (isCircle) {
             builder.transform(new CircleCrop());
+        } else if (radius > 0) {
+            builder.transform(new RoundedCornersTransformation(PixUtils.dp2px(radius), 0));
         }
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         if (layoutParams != null && layoutParams.width > 0 && layoutParams.height > 0) {
@@ -69,7 +72,7 @@ public class PPImageView extends AppCompatImageView {
         }
 
         setSize(widthPx, heightPx, marginLeft, maxWidth, maxHeight);
-        setImageUrl(this, imageUrl, false);
+        setImageUrl(this, imageUrl, false, 0);
     }
 
     private void setSize(int height, int width, int marginLeft, int maxWidth, int maxHeight) {
