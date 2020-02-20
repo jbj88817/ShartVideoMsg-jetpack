@@ -35,4 +35,5 @@
     <string name="file_upload_failed_message">File upload failed!</string>
     <string name="publish_post_success">Post publish success!</string>
     <string name="posting">Posting</string>
+    <string name="publish">Publish</string>
 </resources>

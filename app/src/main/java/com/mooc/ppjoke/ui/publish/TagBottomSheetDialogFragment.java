@@ -16,6 +16,7 @@ import com.mooc.ppjoke.databinding.LayoutTagBottomSheetDialogBinding;
 import com.mooc.ppjoke.model.TagList;
 import com.mooc.ppjoke.ui.login.UserManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -36,7 +37,7 @@ public class TagBottomSheetDialogFragment extends BottomSheetDialogFragment {
     private LayoutTagBottomSheetDialogBinding mBinding;
     private RecyclerView recyclerView;
     private TagsAdapter adapter;
-    private List<TagList> mTagLists;
+    private List<TagList> mTagLists = new ArrayList<>();
     private OnTagItemSelectedListener listener;
 
     @NonNull
