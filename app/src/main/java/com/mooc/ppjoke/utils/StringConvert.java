@@ -1,7 +1,7 @@
 package com.mooc.ppjoke.utils;
 
 public class StringConvert {
-    public static String convertFeedUgc(int count) {
+    public static String convertNum(int count) {
         if (count < 1000) {
             return String.valueOf(count);
         }
