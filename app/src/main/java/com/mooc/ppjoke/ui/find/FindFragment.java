@@ -13,7 +13,6 @@ import us.bojie.libnavannotation.FragmentDestination;
 
 @FragmentDestination(pageUrl = "main/tabs/find")
 public class FindFragment extends SofaFragment {
-    private static final String TAG = "FindFragment";
 
     @Override
     protected Fragment getTabFragment(int position) {
