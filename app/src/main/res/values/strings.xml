@@ -40,4 +40,12 @@
     <string name="no_data">No data</string>
     <string name="go_to_discover">Go to discover</string>
     <string name="people_watching"> people watching</string>
+    <string name="fans_count">\nFans</string>
+    <string name="like_count">\nLikes</string>
+    <string name="follow_count">\nFollows</string>
+    <string name="score_count">\nScores</string>
+    <string name="fragment_my_feed">Feeds</string>
+    <string name="fragment_my_comment">Comments</string>
+    <string name="fragment_my_favorite">Favorites</string>
+    <string name="fragment_my_history">History</string>
 </resources>
