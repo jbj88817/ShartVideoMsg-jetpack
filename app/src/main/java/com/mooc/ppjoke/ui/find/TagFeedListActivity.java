@@ -16,11 +16,17 @@ import com.mooc.ppjoke.model.Feed;
 import com.mooc.ppjoke.model.TagList;
 import com.mooc.ppjoke.ui.home.FeedAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.paging.PagedList;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +35,7 @@ import us.bojie.libcommon.EmptyView;
 import us.bojie.libcommon.extention.AbsPagedListAdapter;
 import us.bojie.libcommon.utils.PixUtils;
 
-public class TagFeedListActivity extends AppCompatActivity implements View.OnClickListener {
+public class TagFeedListActivity extends AppCompatActivity implements View.OnClickListener, OnRefreshListener, OnLoadMoreListener {
 
     public static final String KEY_TAG_LIST = "tag_list";
     public static final String KEY_FEED_TYPE = "tag_feed_type";
@@ -42,6 +48,7 @@ public class TagFeedListActivity extends AppCompatActivity implements View.OnCli
     private boolean shouldPause = true;
     private AbsPagedListAdapter adapter;
     private int totalScrollY;
+    private TagFeedListViewModel tagFeedListViewModel;
 
     public static void startActivity(Context context, TagList tagList) {
         Intent intent = new Intent(context, TagFeedListActivity.class);
@@ -62,6 +69,7 @@ public class TagFeedListActivity extends AppCompatActivity implements View.OnCli
 
         tagList = getIntent().getParcelableExtra(KEY_TAG_LIST);
         mBinding.setTagList(tagList);
+        mBinding.setLifecycleOwner(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = (AbsPagedListAdapter) getAdapter();
@@ -70,12 +78,50 @@ public class TagFeedListActivity extends AppCompatActivity implements View.OnCli
 
         addHeaderView();
 
+        tagFeedListViewModel = ViewModelProviders.of(this).get(TagFeedListViewModel.class);
+        tagFeedListViewModel.setFeedType(tagList.title);
+        tagFeedListViewModel.getPageData().observe(this, new Observer<PagedList<Feed>>() {
+            @Override
+            public void onChanged(PagedList<Feed> feeds) {
+                submitList(feeds);
+            }
+        });
+
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setOnLoadMoreListener(this);
+
+    }
+
+    private void submitList(PagedList<Feed> feeds) {
+        if (feeds.size() > 0) {
+            adapter.submitList(feeds);
+        }
+
+        finishRefresh(feeds.size() > 0);
+    }
+
+    private void finishRefresh(boolean hasData) {
+        PagedList currentList = adapter.getCurrentList();
+        hasData = currentList != null && currentList.size() > 0 || hasData;
+        if (hasData) {
+            emptyView.setVisibility(View.GONE);
+        } else {
+            emptyView.setVisibility(View.VISIBLE);
+        }
+
+        RefreshState state = refreshLayout.getState();
+        if (state.isOpening&&state.isHeader) {
+            refreshLayout.finishRefresh();
+        } else if (state.isOpening&& state.isFooter) {
+            refreshLayout.finishLoadMore();
+        }
     }
 
     private void addHeaderView() {
         LayoutTagFeedListHeaderBinding headerBinding = LayoutTagFeedListHeaderBinding
                 .inflate(LayoutInflater.from(this), recyclerView, false);
         headerBinding.setTagList(tagList);
+        headerBinding.setOwner(this);
         adapter.addHeaderView(headerBinding.getRoot());
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -150,5 +196,15 @@ public class TagFeedListActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         finish();
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        tagFeedListViewModel.getDataSource().invalidate();
+    }
+
+    @Override
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
     }
 }

@@ -9,6 +9,12 @@
             name="tagList"
             type="com.mooc.ppjoke.model.TagList" />
 
+        <variable
+            name="owner"
+            type="androidx.lifecycle.LifecycleOwner" />
+
+        <import type="com.mooc.ppjoke.ui.home.InteractionPresenter" />
+
     </data>
 
     <FrameLayout
@@ -65,6 +71,7 @@
                 android:layout_height="@dimen/dp_28"
                 android:layout_marginStart="@dimen/dp_10"
                 android:backgroundTint="@color/color_theme"
+                android:onClick="@{()->InteractionPresenter.toggleTagLike(owner,tagList)}"
                 android:text="@{tagList.hasFollow?@string/following:@string/follow}"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/sp_13"
