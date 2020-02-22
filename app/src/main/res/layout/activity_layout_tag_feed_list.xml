@@ -16,9 +16,12 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <include layout="@layout/layout_refresh_view" />
+        <include
+            android:id="@+id/refresh_layout"
+            layout="@layout/layout_refresh_view" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48">
 
@@ -57,6 +60,7 @@
                 tools:text="title" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/top_bar_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_28"
                 android:layout_marginStart="@dimen/dp_10"
@@ -70,6 +74,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
+                android:id="@+id/top_line"
                 android:layout_width="match_parent"
                 android:layout_height="2px"
                 android:background="@color/color_divider"

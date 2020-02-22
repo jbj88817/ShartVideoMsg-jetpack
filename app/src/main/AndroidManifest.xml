@@ -64,6 +64,9 @@
             android:name=".ui.publish.PreviewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/preview" />
+
+        <activity android:name=".ui.find.TagFeedListActivity" />
+
     </application>
 
 </manifest>
