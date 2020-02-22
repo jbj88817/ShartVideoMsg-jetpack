@@ -1,9 +1,11 @@
 package com.mooc.ppjoke.ui.find;
 
+import com.alibaba.fastjson.TypeReference;
 import com.mooc.ppjoke.model.Feed;
 import com.mooc.ppjoke.ui.AbsViewModel;
 import com.mooc.ppjoke.ui.login.UserManager;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,6 +57,8 @@ public class TagFeedListViewModel extends AbsViewModel<Feed> {
                 .addParam("pageCount", 10)
                 .addParam("feedType", feedType)
                 .addParam("feedId", feedId)
+                .responseType(new TypeReference<ArrayList<Feed>>() {
+                }.getType())
                 .execute();
 
         List<Feed> result = response.body == null ? Collections.emptyList() : response.body;

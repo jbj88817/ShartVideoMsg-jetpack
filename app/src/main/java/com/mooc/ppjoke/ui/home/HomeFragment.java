@@ -49,16 +49,14 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
         feedType = getArguments() == null ? "all" : getArguments().getString("feedType");
         return new FeedAdapter(getContext(), feedType) {
             @Override
-            public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
-                super.onViewAttachedToWindow(holder);
+            public void onViewAttachedToWindow2(@NonNull ViewHolder holder) {
                 if (holder.isVideoItem()) {
                     playDetector.addTarget(holder.getListPlayerView());
                 }
             }
 
             @Override
-            public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
-                super.onViewDetachedFromWindow(holder);
+            public void onViewDetachedFromWindow2(@NonNull ViewHolder holder) {
                 playDetector.removeTarget(holder.getListPlayerView());
             }
 

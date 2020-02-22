@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mooc.ppjoke.R;
 import com.mooc.ppjoke.databinding.LayoutFeedTypeImageBinding;
 import com.mooc.ppjoke.databinding.LayoutFeedTypeVideoBinding;
 import com.mooc.ppjoke.model.Feed;
@@ -12,17 +13,16 @@ import com.mooc.ppjoke.ui.detail.FeedDetailActivity;
 import com.mooc.ppjoke.view.ListPlayerView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
-import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
+import us.bojie.libcommon.extention.AbsPagedListAdapter;
 import us.bojie.libcommon.extention.LiveDataBus;
 
-import static com.mooc.ppjoke.ui.home.InteractionPresenter.DATA_FROM_INTERACTION;
-
-public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> {
+public class FeedAdapter extends AbsPagedListAdapter<Feed, FeedAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
     private Context mContext;
@@ -38,7 +38,7 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
 
             @Override
             public boolean areContentsTheSame(@NonNull Feed oldItem, @NonNull Feed newItem) {
-                return false;
+                return oldItem.equals(newItem);
             }
         });
 
@@ -48,33 +48,36 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     }
 
     @Override
-    public int getItemViewType(int position) {
-        Feed feed = getItem(position);
-        return feed.getItemType();
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewDataBinding binding = null;
-        if (viewType == Feed.TYPE_IMAGE) {
-            binding = LayoutFeedTypeImageBinding.inflate(inflater);
-        } else {
-            binding = LayoutFeedTypeVideoBinding.inflate(inflater);
-        }
+    protected ViewHolder onCreateViewHolder2(ViewGroup parent, int viewType) {
+        ViewDataBinding binding = DataBindingUtil.inflate(inflater, viewType, parent, false);
         return new ViewHolder(binding.getRoot(), binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public int getItemViewType2(int position) {
+        Feed feed = getItem(position);
+        if (feed.getItemType() == Feed.TYPE_IMAGE) {
+            return R.layout.layout_feed_type_image;
+        } else if (feed.getItemType() == Feed.TYPE_VIDEO) {
+            return R.layout.layout_feed_type_video;
+        }
+        return 0;
+    }
+
+    @Override
+    protected void onBindViewHolder2(ViewHolder holder, int position) {
         final Feed feed = getItem(position);
+
         holder.bindData(feed);
+
         holder.itemView.setOnClickListener(v -> {
             FeedDetailActivity.startFeedDetailActivity(mContext, feed, mCategory);
             onStartFeedDetailActivity(feed);
             if (mFeedObserver == null) {
                 mFeedObserver = new FeedObserver();
-                LiveDataBus.get().with(DATA_FROM_INTERACTION).observe((LifecycleOwner) mContext, mFeedObserver);
+                LiveDataBus.get()
+                        .with(InteractionPresenter.DATA_FROM_INTERACTION)
+                        .observe((LifecycleOwner) mContext, mFeedObserver);
             }
             mFeedObserver.setFeed(feed);
         });
