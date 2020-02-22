@@ -15,6 +15,7 @@ import com.mooc.ppjoke.exoplayer.PageListPlayManager;
 import com.mooc.ppjoke.model.Feed;
 import com.mooc.ppjoke.model.TagList;
 import com.mooc.ppjoke.ui.home.FeedAdapter;
+import com.mooc.ppjoke.utils.StatusBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -24,11 +25,12 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.paging.PagedList;
 import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import us.bojie.libcommon.EmptyView;
@@ -58,38 +60,36 @@ public class TagFeedListActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        StatusBar.fitSystemBar(this);
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_layout_tag_feed_list);
         recyclerView = mBinding.refreshLayout.recyclerView;
         emptyView = mBinding.refreshLayout.emptyView;
         refreshLayout = mBinding.refreshLayout.refreshLayout;
-
         mBinding.actionBack.setOnClickListener(this);
 
-        tagList = getIntent().getParcelableExtra(KEY_TAG_LIST);
+        tagList = (TagList) getIntent().getSerializableExtra(KEY_TAG_LIST);
         mBinding.setTagList(tagList);
-        mBinding.setLifecycleOwner(this);
+        mBinding.setOwner(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = (AbsPagedListAdapter) getAdapter();
         recyclerView.setAdapter(adapter);
+        DividerItemDecoration decoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+        decoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.list_divider));
+        recyclerView.setItemAnimator(null);
         playDetector = new PageListPlayDetector(this, recyclerView);
-
-        addHeaderView();
 
         tagFeedListViewModel = ViewModelProviders.of(this).get(TagFeedListViewModel.class);
         tagFeedListViewModel.setFeedType(tagList.title);
-        tagFeedListViewModel.getPageData().observe(this, new Observer<PagedList<Feed>>() {
-            @Override
-            public void onChanged(PagedList<Feed> feeds) {
-                submitList(feeds);
-            }
-        });
+        tagFeedListViewModel.getPageData().observe(this, feeds -> submitList(feeds));
+        tagFeedListViewModel.getBoundaryPageData().observe(this, hasData -> finishRefresh(hasData));
 
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadMoreListener(this);
 
+        addHeaderView();
     }
 
     private void submitList(PagedList<Feed> feeds) {

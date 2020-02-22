@@ -1,9 +1,11 @@
 package com.mooc.ppjoke.ui.find;
 
+import com.alibaba.fastjson.TypeReference;
 import com.mooc.ppjoke.model.TagList;
 import com.mooc.ppjoke.ui.AbsViewModel;
 import com.mooc.ppjoke.ui.login.UserManager;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -39,7 +41,7 @@ public class TagListViewModel extends AbsViewModel<TagList> {
 
         @Override
         public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<TagList> callback) {
-            loadData(params.requestedInitialKey, callback);
+            loadData(0L, callback);
         }
 
         @Override
@@ -57,6 +59,8 @@ public class TagListViewModel extends AbsViewModel<TagList> {
                     .addParam("tagType", tagType)
                     .addParam("pageCount", 10)
                     .addParam("offset", offset)
+                    .responseType(new TypeReference<ArrayList<TagList>>() {
+                    }.getType())
                     .execute();
 
             List<TagList> result = response.body == null ? Collections.emptyList() : response.body;

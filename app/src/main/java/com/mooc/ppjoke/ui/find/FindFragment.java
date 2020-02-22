@@ -16,7 +16,8 @@ public class FindFragment extends SofaFragment {
 
     @Override
     protected Fragment getTabFragment(int position) {
-        return TagListFragment.newInstance(getTabConfig().tabs.get(position).tag);
+        SofaTab.Tabs tab = getTabConfig().tabs.get(position);
+        return TagListFragment.newInstance(tab.tag);
     }
 
     @Override

@@ -40,12 +40,13 @@ public class TagListFragment extends AbsListFragment<TagList, TagListViewModel> 
                 mViewModel.getSwitchTabLiveData().setValue(new Object());
             });
         }
+        mRecyclerView.removeItemDecorationAt(0);
+        mViewModel.setTagType(tagType);
     }
 
     @Override
     protected PagedListAdapter getAdapter() {
         tagType = getArguments().getString(KEY_TAG_TYPE);
-        mViewModel.setTagType(tagType);
         return new TagListAdapter(getContext());
     }
 
