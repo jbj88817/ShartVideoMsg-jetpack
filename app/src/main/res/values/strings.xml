@@ -48,4 +48,5 @@
     <string name="fragment_my_comment">Comments</string>
     <string name="fragment_my_favorite">Favorites</string>
     <string name="fragment_my_history">History</string>
+    <string name="logout">Log out</string>
 </resources>

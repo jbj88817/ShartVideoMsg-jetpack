@@ -19,10 +19,12 @@
         <com.mooc.ppjoke.view.PPImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_200"
+            android:scaleType="fitXY"
             app:image_url="@{user.avatar}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:radius="@{50}" />
+            app:radius="@{50}"
+            tools:background="#ff0000" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/action_logout"

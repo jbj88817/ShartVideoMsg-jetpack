@@ -52,4 +52,40 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navController.navigate(menuItem.getItemId());
         return !TextUtils.isEmpty(menuItem.getTitle());
     }
+
+    @Override
+    public void onBackPressed() {
+//        boolean shouldIntercept = false;
+//        int homeDestinationId = 0;
+//        Fragment fragment = getSupportFragmentManager().getPrimaryNavigationFragment();
+//        String tag = fragment.getTag();
+//        int currentPageDestId = Integer.parseInt(tag);
+//
+//        HashMap<String, Destination> destConfig = AppConfig.getDestConfig();
+//        Set<String> keySet = destConfig.keySet();
+//        for (String key : keySet) {
+//            Destination destination = destConfig.get(key);
+//            if (!destination.isAsStarter() && destination.getId() != currentPageDestId) {
+//                shouldIntercept = true;
+//            }
+//
+//            if (destination.isAsStarter()) {
+//                homeDestinationId = destination.getId();
+//            }
+//        }
+//
+//        if (shouldIntercept && homeDestinationId > 0) {
+//            navView.setSelectedItemId(homeDestinationId);
+//            return;
+//        }
+//        super.onBackPressed();
+
+        int currentPageId = navController.getCurrentDestination().getId();
+        int homeDestId = navController.getGraph().getStartDestination();
+        if (currentPageId != homeDestId) {
+            navView.setSelectedItemId(homeDestId);
+            return;
+        }
+        finish();
+    }
 }

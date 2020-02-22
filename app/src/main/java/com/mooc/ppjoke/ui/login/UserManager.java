@@ -7,7 +7,13 @@ import com.mooc.ppjoke.model.User;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import us.bojie.libcommon.AppGlobals;
+import us.bojie.libnetwork.ApiResponse;
+import us.bojie.libnetwork.ApiService;
+import us.bojie.libnetwork.JsonCallback;
 import us.bojie.libnetwork.cache.CacheManager;
+
+import static us.bojie.libcommon.utils.ToastUtils.showToast;
 
 public class UserManager {
 
@@ -55,4 +61,32 @@ public class UserManager {
         return isLogin() ? mUser.getUserId() : 0;
     }
 
+    public LiveData<User> refresh() {
+        if (!isLogin()) {
+            return login(AppGlobals.getApplication());
+        }
+        MutableLiveData<User> liveData = new MutableLiveData<>();
+        ApiService.get("/user/query")
+                .addParam("userId", getUserId())
+                .execute(new JsonCallback<User>() {
+                    @Override
+                    public void onSuccess(ApiResponse<User> response) {
+                        save(response.body);
+                        liveData.postValue(getUser());
+                    }
+
+                    @Override
+                    public void onError(ApiResponse<User> response) {
+                        showToast(response.message);
+                        liveData.postValue(null);
+                    }
+                });
+
+        return liveData;
+    }
+
+    public void logout() {
+        CacheManager.delete(KEY_CACHE_USER, mUser);
+        mUser = null;
+    }
 }

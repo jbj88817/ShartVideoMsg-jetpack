@@ -1,12 +1,12 @@
 package us.bojie.libnetwork.cache;
 
-import androidx.annotation.Nullable;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import androidx.annotation.Nullable;
 
 public class CacheManager {
     public static <T> void save(String key, T body) {
@@ -74,5 +74,12 @@ public class CacheManager {
             }
         }
         return new byte[0];
+    }
+
+    public static <T> void delete(String keyCacheUser, T cache) {
+        Cache cache1 = new Cache();
+        cache1.key = keyCacheUser;
+        cache1.data = toByteArray(cache);
+        CacheDatabase.get().getCache().delete(cache1);
     }
 }

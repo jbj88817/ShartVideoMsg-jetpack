@@ -25,5 +25,4 @@
     <dimen name="dp_300">300dp</dimen>
     <dimen name="sp_18">18sp</dimen>
     <dimen name="dp_75">75dp</dimen>
-    <dimen name="dp_75">75dp</dimen>
 </resources>
