@@ -19,19 +19,21 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.databinding.BindingAdapter;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import us.bojie.libcommon.ViewHelper;
 import us.bojie.libcommon.utils.PixUtils;
 
 public class PPImageView extends AppCompatImageView {
     public PPImageView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public PPImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public PPImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        ViewHelper.setViewOutline(this, attrs, defStyleAttr, 0);
     }
 
     public void setImageUrl(String imageUrl) {
