@@ -66,6 +66,7 @@
             android:theme="@style/preview" />
 
         <activity android:name=".ui.find.TagFeedListActivity" />
+        <activity android:name=".ui.me.ProfileActivity" />
 
     </application>
 
