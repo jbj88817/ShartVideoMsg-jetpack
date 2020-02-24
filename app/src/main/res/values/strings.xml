@@ -49,6 +49,7 @@
     <string name="fragment_my_favorite">Favorites</string>
     <string name="fragment_my_history">History</string>
     <string name="logout">Log out</string>
+    <string name="comment">comment</string>
 
     <string-array name="profile_tabs">
         <item>News</item>

@@ -25,8 +25,8 @@ import us.bojie.libcommon.extention.LiveDataBus;
 public class FeedAdapter extends AbsPagedListAdapter<Feed, FeedAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
-    private Context mContext;
-    private String mCategory;
+    protected Context mContext;
+    protected String mCategory;
     private FeedObserver mFeedObserver;
 
     protected FeedAdapter(Context context, String category) {
@@ -108,7 +108,7 @@ public class FeedAdapter extends AbsPagedListAdapter<Feed, FeedAdapter.ViewHolde
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ViewDataBinding mBinding;
-        private ListPlayerView listPlayerView;
+        public ListPlayerView listPlayerView;
 
         public ViewHolder(@NonNull View itemView, ViewDataBinding binding) {
             super(itemView);
@@ -116,15 +116,17 @@ public class FeedAdapter extends AbsPagedListAdapter<Feed, FeedAdapter.ViewHolde
         }
 
         public void bindData(Feed item) {
+            mBinding.setVariable(com.mooc.ppjoke.BR.feed, item);
+            mBinding.setVariable(com.mooc.ppjoke.BR.lifeCycleOwner, mContext);
             if (mBinding instanceof LayoutFeedTypeImageBinding) {
                 LayoutFeedTypeImageBinding imageBinding = (LayoutFeedTypeImageBinding) mBinding;
-                imageBinding.setLifeCycleOwner((LifecycleOwner) mContext);
-                imageBinding.setFeed(item);
+//                imageBinding.setLifeCycleOwner((LifecycleOwner) mContext);
+//                imageBinding.setFeed(item);
                 imageBinding.feedImage.bindData(item.getWidth(), item.getHeight(), 16, item.getCover());
             } else {
                 LayoutFeedTypeVideoBinding videoBinding = (LayoutFeedTypeVideoBinding) mBinding;
-                videoBinding.setLifeCycleOwner((LifecycleOwner) mContext);
-                videoBinding.setFeed(item);
+//                videoBinding.setLifeCycleOwner((LifecycleOwner) mContext);
+//                videoBinding.setFeed(item);
                 listPlayerView = videoBinding.listPlayerView;
                 listPlayerView.bindData(mCategory, item.getWidth(), item.getHeight(), item.getCover(), item.getUrl());
             }

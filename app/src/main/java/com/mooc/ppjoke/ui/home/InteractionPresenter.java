@@ -312,4 +312,33 @@ public class InteractionPresenter {
         };
     }
 
+    public static LiveData<Boolean> deleteFeed(Context context, long itemId) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        new androidx.appcompat.app.AlertDialog.Builder(context)
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    dialog.dismiss();
+                    deleteFeedInternal(liveData, itemId);
+                }).setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()).setMessage("Are you sure?").create().show();
+        return liveData;
+    }
+
+    private static void deleteFeedInternal(MutableLiveData<Boolean> liveData, long itemId) {
+        ApiService.get("/feeds/deleteFeed")
+                .addParam("itemId", itemId)
+                .execute(new JsonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(ApiResponse<JSONObject> response) {
+                        if (response.body != null) {
+                            boolean success = response.body.getBoolean("result");
+                            liveData.postValue(success);
+                            showToast("Delete succeed!");
+                        }
+                    }
+
+                    @Override
+                    public void onError(ApiResponse<JSONObject> response) {
+                        showToast(response.message);
+                    }
+                });
+    }
 }
