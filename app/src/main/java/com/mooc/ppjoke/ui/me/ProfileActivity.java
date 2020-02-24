@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     public static void startProfileActivity(Context context, String tabType) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(context, ProfileActivity.class);
         intent.putExtra(KEY_TAB_TYPE, tabType);
         context.startActivity(intent);
     }
@@ -46,9 +46,6 @@ public class ProfileActivity extends AppCompatActivity {
         String[] tabs = getResources().getStringArray(R.array.profile_tabs);
         ViewPager2 viewPager = mBinding.viewPager;
         TabLayout tabLayout = mBinding.tabLayout;
-        new TabLayoutMediator(tabLayout, viewPager, false, (tab, position) -> {
-            tab.setText(tabs[position]);
-        }).attach();
 
         int initTabPosition = getInitTabPosition();
 
@@ -68,6 +65,8 @@ public class ProfileActivity extends AppCompatActivity {
                 return tabs.length;
             }
         });
+
+        new TabLayoutMediator(tabLayout, viewPager, false, (tab, position) -> tab.setText(tabs[position])).attach();
 
         mBinding.appbar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
             boolean expend = Math.abs(verticalOffset) < appBarLayout.getTotalScrollRange();

@@ -14,7 +14,7 @@ import androidx.paging.ItemKeyedDataSource;
 import us.bojie.libnetwork.ApiResponse;
 import us.bojie.libnetwork.ApiService;
 
-public class MyViewModel extends AbsViewModel<Feed> {
+public class ProfileViewModel extends AbsViewModel<Feed> {
 
     private String profileType;
 
@@ -24,24 +24,24 @@ public class MyViewModel extends AbsViewModel<Feed> {
 
     @Override
     protected DataSource createDataSource() {
-        return null;
+        return new DataSource();
     }
 
-    private class DataSource extends ItemKeyedDataSource<Long, Feed> {
+    private class DataSource extends ItemKeyedDataSource<Integer, Feed> {
 
         @Override
-        public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<Feed> callback) {
+        public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Feed> callback) {
             loadData(params.requestedInitialKey, callback);
         }
 
         @Override
-        public void loadAfter(@NonNull LoadParams<Long> params, @NonNull LoadCallback<Feed> callback) {
+        public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Feed> callback) {
             loadData(params.key, callback);
         }
 
-        private void loadData(Long key, LoadCallback<Feed> callback) {
+        private void loadData(Integer key, LoadCallback<Feed> callback) {
             ApiResponse<List<Feed>> response = ApiService.get("/feeds/queryProfileFeeds")
-                    .addParam("inId", key)
+                    .addParam("feedId", key)
                     .addParam("userId", UserManager.get().getUserId())
                     .addParam("pageCount", 10)
                     .addParam("profileType", profileType)
@@ -58,14 +58,14 @@ public class MyViewModel extends AbsViewModel<Feed> {
         }
 
         @Override
-        public void loadBefore(@NonNull LoadParams<Long> params, @NonNull LoadCallback<Feed> callback) {
+        public void loadBefore(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Feed> callback) {
             callback.onResult(Collections.emptyList());
         }
 
         @NonNull
         @Override
-        public Long getKey(@NonNull Feed item) {
-            return item.getItemId();
+        public Integer getKey(@NonNull Feed item) {
+            return item.getId();
         }
     }
 }

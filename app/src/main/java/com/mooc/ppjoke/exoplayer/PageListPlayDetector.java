@@ -3,14 +3,14 @@ package com.mooc.ppjoke.exoplayer;
 import android.graphics.Point;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PageListPlayDetector {
 
@@ -33,45 +33,56 @@ public class PageListPlayDetector {
             @Override
             public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
                 if (event == Lifecycle.Event.ON_DESTROY) {
-                    recyclerView.getAdapter().unregisterAdapterDataObserver(mDataObserver);
+                    playingTarget = null;
+                    mTargets.clear();
+                    mRecyclerView.removeCallbacks(delayAutoPlay);
+                    recyclerView.removeOnScrollListener(scrollListener);
                     owner.getLifecycle().removeObserver(this);
                 }
             }
         });
 
         recyclerView.getAdapter().registerAdapterDataObserver(mDataObserver);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(scrollListener);
+    }
 
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    autoPlay();
+    RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener(){
+
+        @Override
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                autoPlay();
+            }
+        }
+
+        @Override
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            if (dx == 0 && dy == 0) {
+                //When AdapterDataObserver#onItemRangeInserted, maybe it's not on RecyclerView。
+                //So now recyclerview.getChildCount() may equals 0。
+                //When childView inflated on RecyclerView，it would call onScrolled()
+                //and dx,dy are both equals 0
+                autoPlay();
+            } else {
+                if (playingTarget != null && playingTarget.isPlaying() && !isTargetInBounds(playingTarget)) {
+                    playingTarget.inActive();
                 }
             }
+        }
+    };
 
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+    Runnable delayAutoPlay = () -> autoPlay();
 
-                if (dx == 0 && dy == 0) {
-                    //When AdapterDataObserver#onItemRangeInserted, maybe it's not on RecyclerView。
-                    //So now recyclerview.getChildCount() may equals 0。
-                    //When childView inflated on RecyclerView，it would call onScrolled()
-                    //and dx,dy are both equals 0
-                    autoPlay();
-                } else {
-                    if (playingTarget != null && playingTarget.isPlaying() && !isTargetInBounds(playingTarget)) {
-                        playingTarget.inActive();
-                    }
-                }
-            }
-        });
+    private void postAutoPlay() {
+        mRecyclerView.post(delayAutoPlay);
     }
 
     private RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
-            autoPlay();
+            postAutoPlay();
         }
     };
 

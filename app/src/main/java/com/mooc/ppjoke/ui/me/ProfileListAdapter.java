@@ -33,7 +33,6 @@ public class ProfileListAdapter extends FeedAdapter {
     @Override
     protected void onBindViewHolder2(ViewHolder holder, int position) {
         super.onBindViewHolder2(holder, position);
-        View dissView = holder.itemView.findViewById(R.id.diss);
         View deleteView = holder.itemView.findViewById(R.id.feed_delete);
         TextView createTime = holder.itemView.findViewById(R.id.create_time);
 
@@ -42,10 +41,7 @@ public class ProfileListAdapter extends FeedAdapter {
         createTime.setText(TimeUtils.calculate(feed.getCreateTime()));
 
         boolean isCommentTab = TextUtils.equals(mCategory, ProfileActivity.TAB_TYPE_COMMENT);
-        if (isCommentTab) {
-            dissView.setVisibility(View.GONE);
-        }
-
+        deleteView.setVisibility(View.VISIBLE);
         deleteView.setOnClickListener(v -> {
             if (isCommentTab) {
                 InteractionPresenter.deleteFeedComment(mContext, feed.getItemId(), feed.getTopComment().getCommentId())

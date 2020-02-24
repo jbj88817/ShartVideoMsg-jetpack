@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.paging.PagedList;
 import androidx.paging.PagedListAdapter;
 
-public class ProfileListFragment extends AbsListFragment<Feed, MyViewModel> {
+public class ProfileListFragment extends AbsListFragment<Feed, ProfileViewModel> {
 
     private String tabType;
     private PageListPlayDetector playDetector;

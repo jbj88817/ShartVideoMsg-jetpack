@@ -43,6 +43,10 @@ public class MyFragment extends Fragment {
                     getActivity().onBackPressed();
                 })
                 .setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss()).create().show());
+
+        mBinding.goDetail.setOnClickListener(v -> ProfileActivity.startProfileActivity(getContext(), ProfileActivity.TAB_TYPE_ALL));
+        mBinding.userFeed.setOnClickListener(v -> ProfileActivity.startProfileActivity(getContext(), ProfileActivity.TAB_TYPE_FEED));
+        mBinding.userComment.setOnClickListener(v -> ProfileActivity.startProfileActivity(getContext(), ProfileActivity.TAB_TYPE_COMMENT));
     }
 
     @Override

@@ -123,7 +123,7 @@ public class FeedAdapter extends AbsPagedListAdapter<Feed, FeedAdapter.ViewHolde
 //                imageBinding.setLifeCycleOwner((LifecycleOwner) mContext);
 //                imageBinding.setFeed(item);
                 imageBinding.feedImage.bindData(item.getWidth(), item.getHeight(), 16, item.getCover());
-            } else {
+            } else if (mBinding instanceof LayoutFeedTypeVideoBinding) {
                 LayoutFeedTypeVideoBinding videoBinding = (LayoutFeedTypeVideoBinding) mBinding;
 //                videoBinding.setLifeCycleOwner((LifecycleOwner) mContext);
 //                videoBinding.setFeed(item);

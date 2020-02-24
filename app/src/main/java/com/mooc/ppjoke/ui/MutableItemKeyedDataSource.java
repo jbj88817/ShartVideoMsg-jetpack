@@ -33,7 +33,9 @@ public abstract class MutableItemKeyedDataSource<Key, Value> extends ItemKeyedDa
 
     @Override
     public void loadAfter(@NonNull LoadParams<Key> params, @NonNull LoadCallback<Value> callback) {
-        mDataSource.loadAfter(params, callback);
+        if (mDataSource != null) {
+            mDataSource.loadAfter(params, callback);
+        }
     }
 
     @Override
